@@ -43,6 +43,9 @@ const styles = stylex.create({
     cursor: "pointer",
     transition: "all 0.2s ease-in-out",
     ":hover": { scale: 1.2 }
+  },
+  button: {
+    cursor: "pointer",
   }
 });
 
@@ -50,24 +53,26 @@ type Props = {
   style?: StyleXStyles<any>;
 };
 
+const openDexScreener = () => {
+  const url = 'https://dexscreener.com/arbitrum/0x0807ccff97b714ff39e90e4f36b2eaf67a918af0';
+  window.open(url, '_blank')?.focus();
+};
+
+const openCamelot = () => {
+  const url = 'https://app.camelot.exchange/?token2=0xA8F77a162f0d8fC775A2aaE9Ea855f293e5C9772';
+  window.open(url, '_blank')?.focus();
+};
+
 export default function Hero({ style }: Props) {
   return <div {...stylex.props(styles.defaultHero, style)}>
     <div {...stylex.props(styles.container)}>
-      <Card>
-        Lorem Ipsum
-        <LazyImage src={Arbitrum} style={styles.providerLogo} />
+      <Card onClick={openDexScreener} {...stylex.props(styles.button)}>
+        MINGUS / WETH
+        <LazyImage src={Arbitrum} style={styles.providerLogo} onClick={openDexScreener} />
       </Card>
-      <Card>
-        Lorem Ipsum
-        <LazyImage src={Camelot} style={styles.providerLogo} />
-      </Card>
-      <Button>
-        Lorem Ipsum
-        <LazyImage src={Arbitrum} style={styles.providerLogo} />
-      </Button>
-      <Button>
-        Lorem Ipsum
-        <LazyImage src={Camelot} style={styles.providerLogo} />
+      <Button onClick={openCamelot}>
+        CAMELOT
+        <LazyImage src={Camelot} style={styles.providerLogo} onClick={openCamelot} />
       </Button>
       <div {...stylex.props(styles.socials)}>
         <div {...stylex.props(styles.socialLogo)}>

@@ -31,9 +31,10 @@ const styles = stylex.create({
 type Props = {
   children?: ReactNode;
   style?: StyleXStyles<any>;
+  onClick?: () => void;
 };
 
-export default function Button({ children, style }: Props) {
+export default function Button({ children, style, onClick }: Props) {
   const buttonRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -43,5 +44,5 @@ export default function Button({ children, style }: Props) {
     }
   }, []);
 
-  return <div ref={buttonRef} {...stylex.props(styles.defaultButton, style)}>{children}</div>;
+  return <div ref={buttonRef} {...stylex.props(styles.defaultButton, style)} onClick={onClick}>{children}</div>;
 }

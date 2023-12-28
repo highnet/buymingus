@@ -14,14 +14,16 @@ const styles = stylex.create({
     alignItems: "center",
     justifyContent: "center",
     gap: "1.6rem",
+    cursor: "pointer",
   },
 });
 
 type Props = {
   children?: ReactNode;
   style?: StyleXStyles<any>;
+  onClick? : () => void;
 };
 
-export default function Card({ children, style }: Props) {
-  return <div {...stylex.props(styles.defaultCard, style)}>{children}</div>;
+export default function Card({ children, style, onClick }: Props) {
+  return <div {...stylex.props(styles.defaultCard, style)} onClick={onClick}>{children}</div>;
 }
