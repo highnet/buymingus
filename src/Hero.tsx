@@ -46,7 +46,7 @@ const styles = stylex.create({
   },
   button: {
     cursor: "pointer",
-  }
+  },
 });
 
 type Props = {
@@ -76,15 +76,11 @@ export default function Hero({ style }: Props) {
       </Button>
       <div {...stylex.props(styles.socials)}>
         <div {...stylex.props(styles.socialLogo)}>
-          <LazyImage src={Discord} onClick={() => window.open('http://discord.com', '_blank')} />
+          <LazyImage src={Twitter} onClick={() => window.open('https://twitter.com/mingus_arb', '_blank')} />
         </div>
         <div {...stylex.props(styles.socialLogo)}>
-          <LazyImage src={Twitter} onClick={() => window.open('http://twitter.com', '_blank')} />
+          <LazyImage src={Telegram} onClick={() => window.open('https://t.me/+5wlA0R4BiMkxMTIx', '_blank')} />
         </div>
-        <div {...stylex.props(styles.socialLogo)}>
-          <LazyImage src={Telegram} onClick={() => window.open('http://telegram.com', '_blank')} />
-        </div>
-
       </div>
     </div>
     <div>

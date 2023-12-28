@@ -20,8 +20,13 @@ type Props = {
   style?: StyleXStyles<any>;
 };
 
+const openCamelot = () => {
+  const url = 'https://app.camelot.exchange/?token2=0xA8F77a162f0d8fC775A2aaE9Ea855f293e5C9772';
+  window.open(url, '_blank')?.focus();
+};
+
 export default function Header({ style }: Props) {
   return <div {...stylex.props(styles.defaultHeader, style)}>
-    <Button>Lorem Ipsum</Button>
+    <Button onClick={openCamelot}>Buy Now</Button>
   </div>;
 }
