@@ -24,7 +24,6 @@ const styles = stylex.create({
 });
 
 function App() {
-
   return (
     <>
       <Header />

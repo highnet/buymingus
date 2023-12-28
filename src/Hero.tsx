@@ -10,12 +10,20 @@ import LazyImage from "./LazyImage";
 import Card from "./Card";
 
 const styles = stylex.create({
+  defaultHeroTitle: {
+    color: "white",
+    fontSize: "10rem",
+  },
   defaultHero: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     paddingTop: "8rem",
     gap: "6rem"
+  },
+  defaultHeroSlogan: {
+    color: "white",
+    fontSize: "4rem",
   },
   container: {
     display: "flex",
@@ -63,27 +71,37 @@ const openCamelot = () => {
 };
 
 export default function Hero({ style }: Props) {
-  return <div {...stylex.props(styles.defaultHero, style)}>
-    <div {...stylex.props(styles.container)}>
-      <Card onClick={openDexScreener} {...stylex.props(styles.button)}>
-        MINGUS / WETH
-        <LazyImage src={Arbitrum} style={styles.providerLogo} onClick={openDexScreener} />
-      </Card>
-      <Button onClick={openCamelot}>
-        CAMELOT
-        <LazyImage src={Camelot} style={styles.providerLogo} onClick={openCamelot} />
-      </Button>
-      <div {...stylex.props(styles.socials)}>
-        <div {...stylex.props(styles.socialLogo)}>
-          <LazyImage src={Twitter} onClick={() => window.open('https://twitter.com/mingus_arb', '_blank')} />
-        </div>
-        <div {...stylex.props(styles.socialLogo)}>
-          <LazyImage src={Telegram} onClick={() => window.open('https://t.me/+5wlA0R4BiMkxMTIx', '_blank')} />
+  return <div>
+    <div {...stylex.props(styles.defaultHero, style)}>
+      <div {...stylex.props(styles.defaultHeroTitle, style)}>Mingus</div>
+    </div>
+    <div {...stylex.props(styles.defaultHero, style)}>
+      <div {...stylex.props(styles.container)}>
+        <Card onClick={openDexScreener} {...stylex.props(styles.button)}>
+          MINGUS / WETH
+          <LazyImage src={Arbitrum} style={styles.providerLogo} onClick={openDexScreener} />
+        </Card>
+        <Button onClick={openCamelot}>
+          CAMELOT
+          <LazyImage src={Camelot} style={styles.providerLogo} onClick={openCamelot} />
+        </Button>
+        <div {...stylex.props(styles.socials)}>
+          <div {...stylex.props(styles.socialLogo)}>
+            <LazyImage src={Twitter} onClick={() => window.open('https://twitter.com/mingus_arb', '_blank')} />
+          </div>
+          <div {...stylex.props(styles.socialLogo)}>
+            <LazyImage src={Telegram} onClick={() => window.open('https://t.me/+5wlA0R4BiMkxMTIx', '_blank')} />
+          </div>
         </div>
       </div>
+      <div>
+        <LazyImage src={SuperHero} style={styles.superHero} />
+      </div>
     </div>
-    <div>
-      <LazyImage src={SuperHero} style={styles.superHero} />
+    <div {...stylex.props(styles.defaultHero, style)}>
+      <div {...stylex.props(styles.defaultHeroSlogan, style)}>
+        Reclaiming the liquidity out of cat tokens.
+      </div>
     </div>
   </div>;
 }
