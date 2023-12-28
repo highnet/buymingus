@@ -1,5 +1,5 @@
 import stylex from "@stylexjs/stylex";
-import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { ReactNode, useLayoutEffect, useRef } from "react";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import { colors } from '@stylexjs/open-props/lib/colors.stylex'
 

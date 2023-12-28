@@ -1,6 +1,6 @@
 import stylex from "@stylexjs/stylex";
-import { ReactNode } from "react";
-import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
+// import { ReactNode } from "react";
+// import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import { colors } from '@stylexjs/open-props/lib/colors.stylex'
 
 const styles = stylex.create({
@@ -18,12 +18,12 @@ const styles = stylex.create({
   },
 });
 
-type Props = {
-  children?: ReactNode;
-  style?: StyleXStyles<any>;
-  onClick? : () => void;
-};
+// type Props = {
+//   children?: ReactNode;
+//   style?: StyleXStyles<any>;
+//   onClick? : () => void;
+// };
 
-export default function Card({ children, style, onClick }: Props) {
+export default function Card({ children, style, onClick }: any) {
   return <div {...stylex.props(styles.defaultCard, style)} onClick={onClick}>{children}</div>;
 }

@@ -1,4 +1,3 @@
-import { colors } from "@stylexjs/open-props/lib/colors.stylex";
 import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 

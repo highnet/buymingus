@@ -2,7 +2,6 @@ import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import Button from "./Button";
 import SuperHero from "./assets/superhero.jpg";
-import Discord from "./assets/discord.png";
 import Telegram from "./assets/telegram.png";
 import Twitter from "./assets/twitter.png";
 import Arbitrum from "./assets/arbitrum.png";
