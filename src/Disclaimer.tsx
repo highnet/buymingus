@@ -16,6 +16,18 @@ const styles = stylex.create({
     color: "#bdbdbd",
     wordBreak: "break-word",
   },
+  smaller: {
+    fontSize: "2rem",
+  },
+  small: {
+    fontSize: "1.5rem",
+  },
+  tiny: {
+    fontSize: "1rem",
+  },
+  smallest: {
+    fontSize: "0.5rem",
+  },
 });
 
 type Props = {
@@ -30,12 +42,12 @@ export default function Tokenomics({ style }: Props) {
         Please read this disclaimer carefully.
       </p>
 
-      <p>
+      <p {...stylex.props(styles.smaller, style)}>
       By even considering the purchase of this ERC20 token, you acknowledge and agree that you are willfully ignoring common sense and reason. Furthermore, the following risks are not exhaustive and there may be other risks that we have not foreseen or identified:
         <ul>
-          <li>Risk of Spontaneous Combustion: There is a non-zero chance (approximately 0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001% chance) that the ERC20 token you are about to purchase will spontaneously combust, leaving you with nothing but a pile of digital ash and a profound sense of regret.</li>
-          <li>Possibility of Alien Abduction: The purchase of this ERC20 token may attract the attention of extraterrestrial beings who, upon discovering your questionable investment decision, will promptly abduct you for further study. Nobody can be held responsible for any probing that may occur as a result of your poor judgment.</li>
-          <li>Inadvertent Time Travel: It has been theorized that purchasing Mingus may create a quantum entanglement with the fabric of spacetime, causing you to inadvertently travel through time. While this could be a fantastic adventure, it is also fraught with peril and may result in paradoxes that could unravel the very fabric of existence.</li>
+          <li {...stylex.props(styles.small, style)}>Risk of Spontaneous Combustion: There is a non-zero chance (approximately 0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001% chance) that the ERC20 token you are about to purchase will spontaneously combust, leaving you with nothing but a pile of digital ash and a profound sense of regret.</li>
+          <li {...stylex.props(styles.tiny, style)}>Possibility of Alien Abduction: The purchase of this ERC20 token may attract the attention of extraterrestrial beings who, upon discovering your questionable investment decision, will promptly abduct you for further study. Nobody can be held responsible for any probing that may occur as a result of your poor judgment.</li>
+          <li {...stylex.props(styles.smallest, style)}>Inadvertent Time Travel: It has been theorized that purchasing Mingus may create a quantum entanglement with the fabric of spacetime, causing you to inadvertently travel through time. While this could be a fantastic adventure, it is also fraught with peril and may result in paradoxes that could unravel the very fabric of existence.</li>
         </ul>
       </p>
 
