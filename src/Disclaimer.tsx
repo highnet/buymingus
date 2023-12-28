@@ -14,6 +14,7 @@ const styles = stylex.create({
     maxWidth: "80rem",
     margin: "0 auto",
     paddingTop: "4rem",
+    color: "#bdbdbd",
   },
 });
 
