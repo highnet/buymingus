@@ -50,8 +50,6 @@ export default function Tokenomics({ style }: Props) {
           <li {...stylex.props(styles.smallest, style)}>Inadvertent Time Travel: It has been theorized that purchasing Mingus may create a quantum entanglement with the fabric of spacetime, causing you to inadvertently travel through time. While this could be a fantastic adventure, it is also fraught with peril and may result in paradoxes that could unravel the very fabric of existence.</li>
         </ul>
       </p>
-
-      <p>TLDR Buy at your own risk or even better, don't buy at all.</p>
     </p>
   </div>;
 }
