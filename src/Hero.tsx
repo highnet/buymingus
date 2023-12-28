@@ -100,7 +100,7 @@ export default function Hero({ style }: Props) {
     </div>
     <div {...stylex.props(styles.defaultHero, style)}>
       <div {...stylex.props(styles.defaultHeroSlogan, style)}>
-        Reclaiming the liquidity out of cat tokens.
+        Reclaiming the liquidity from cat tokens.
       </div>
     </div>
   </div>;
