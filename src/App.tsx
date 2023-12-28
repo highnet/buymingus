@@ -19,7 +19,7 @@ const styles = stylex.create({
     ":hover":
     {
       transform: 'translateY(-10rem) rotate(360deg)',
-    }
+    },
   }
 });
 

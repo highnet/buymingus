@@ -16,6 +16,7 @@ html {
 body {
 	margin: 0;
 	background-image: url("assets/bg.svg"); /* https://fffuel.co/ooorganize/ */
+	background-color: #1a1a1a;
   font-family: 'Anton', sans-serif;
 }
 
