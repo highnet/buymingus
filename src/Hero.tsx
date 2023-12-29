@@ -79,7 +79,12 @@ const openMirror = () => {
 export default function Hero({ style }: Props) {
   return <div>
     <div {...stylex.props(styles.defaultHero, style)}>
-      <div {...stylex.props(styles.defaultHeroTitle, style)}>$Mingus</div>
+      <div {...stylex.props(styles.defaultHeroTitle, style)}>$mingus</div>
+    </div>
+    <div {...stylex.props(styles.defaultHero, style)}>
+      <div {...stylex.props(styles.defaultHeroSlogan, style)}>
+        Reclaiming the liquidity from cat tokens.
+      </div>
     </div>
     <div {...stylex.props(styles.defaultHero, style)}>
       <div {...stylex.props(styles.container)}>
@@ -106,11 +111,6 @@ export default function Hero({ style }: Props) {
       </div>
       <div>
         <LazyImage src={SuperHero} style={styles.superHero} />
-      </div>
-    </div>
-    <div {...stylex.props(styles.defaultHero, style)}>
-      <div {...stylex.props(styles.defaultHeroSlogan, style)}>
-        Reclaiming the liquidity from cat tokens.
       </div>
     </div>
   </div>;
