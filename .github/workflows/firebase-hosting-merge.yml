@@ -11,9 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MINGUS_FDBA7 }}'
-          channelId: live
-          projectId: mingus-fdba7
+          node-version: '20.10'
+      - name: Yarn install and build # Define the step name here
+        run: |
+          yarn install
+          yarn build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
