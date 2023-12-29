@@ -97,7 +97,7 @@ export default function Hero({ style }: Props) {
           <LazyImage src={Camelot} style={styles.providerLogo} onClick={openCamelot} />
         </Button>
         <Button onClick={openMirror}>
-          Mirror
+          Docs
           <LazyImage src={Mirror} style={styles.providerLogo} onClick={openMirror} />
         </Button>
         <div {...stylex.props(styles.socials)}>
