@@ -20,8 +20,8 @@ jobs:
           yarn install
           yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
-      with:
-        repoToken: '${{ secrets.GITHUB_TOKEN }}'
-        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MINGUS_FDBA7 }}'
-        channelId: live
-        projectId: mingus-fdba7
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MINGUS_FDBA7 }}'
+          channelId: live
+          projectId: mingus-fdba7
