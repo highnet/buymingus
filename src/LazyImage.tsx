@@ -16,6 +16,7 @@ type Props = {
     height?: string,
     transform?: string,
     padding?: string,
+    margin?: string,
     transition?: string,
     position?: string,
     borderRadius?: string,

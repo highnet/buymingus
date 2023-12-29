@@ -6,7 +6,7 @@ import LazyImage from "./LazyImage";
 const styles = stylex.create({
   defaultFooter: {
     display: "flex",
-    alignItems: "flex-end",
+    alignItems: "center",
     flexDirection: "column",
     justifyContent: "center",
     width: "100%",
@@ -16,6 +16,9 @@ const styles = stylex.create({
     padding: "3.2rem",
     marginTop: "4rem",
     fontSize: "1.6rem",
+    "@media (min-width: 601px)": {
+      alignItems: "flex-end",
+    },
   },
   providerText: {
     display: "flex",

@@ -9,21 +9,24 @@ const styles = stylex.create({
     jusstifyContent: "center",
     alignItems: "center",
     gap: "1.6rem",
-    border: `0.1rem solid ${colors.teal4}`,
+    border: `0.1rem solid ${colors.choco6}`,
     borderRadius: "0.8rem",
-    background: `linear-gradient(to right, ${colors.yellow5} 50%, ${colors.teal4} 50%)`,
+    background: `linear-gradient(to right, ${colors.yellow5} 50%, ${colors.choco8} 50%)`,
     backgroundSize: '200%',
     backgroundPosition: 'right bottom',
     color: colors.teal0,
     padding: "0.8rem 1.6rem",
     cursor: "pointer",
     transition: "all 0.2s ease-in-out",
-    fontSize: "3.2rem",
+    fontSize: "2.2rem",
     width: 'fit-content',
     ":hover": {
       backgroundPosition: 'left bottom',
       scale: 1.3
-    }
+    },
+    "@media (min-width: 601px)": {
+      fontSize: "3.2rem",
+    },
   },
 
 });

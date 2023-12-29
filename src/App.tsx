@@ -10,15 +10,21 @@ import Footer from './Footer';
 
 const styles = stylex.create({
   logo: {
-    width: "18rem",
-    height: "18rem",
-    transform: 'translateY(-10rem)',
-    padding: "1.4rem",
+    width: "12rem",
+    height: "12rem",
+    transform: 'translateY(-8rem)',
+    margin: "0 0.8rem",
     transition: 'transform 2.5s',
     position: 'absolute',
     ":hover":
     {
       transform: 'translateY(-10rem) rotate(360deg)',
+    },
+    "@media (min-width: 601px)": {
+      width: "18rem",
+      height: "18rem",
+      transform: 'translateY(-9rem)',
+      margin: "0 2.4rem",
     },
   }
 });

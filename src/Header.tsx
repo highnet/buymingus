@@ -12,7 +12,10 @@ const styles = stylex.create({
     height: "10rem",
     backgroundColor: "black",
     clipPath: "polygon(0 1%, 100% 0, 100% 90%, 0% 100%)",
-    padding: "3.2rem",
+    padding: "1.2rem",
+    "@media (min-width: 601px)": {
+      padding: "3.2rem",
+    },
   },
 });
 

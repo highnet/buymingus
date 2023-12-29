@@ -10,33 +10,55 @@ import Mirror from "./assets/mirror.jpg";
 import RoadMap from "./assets/roadmap.png";
 import LazyImage from "./LazyImage";
 import Card from "./Card";
+import FlavorText from "./FlavorText";
 
 const styles = stylex.create({
-  defaultHeroTitle: {
-    color: "white",
-    fontSize: "10rem",
-  },
+
   defaultHero: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
-    paddingTop: "8rem",
-    gap: "6rem",
+    alignItems: "center",
+    paddingTop: "6rem",
+    gap: "2rem",
+    "@media (min-width: 601px)": {
+      flexDirection: "row",
+      paddingTop: "8rem",
+      gap: "6rem",
+
+    },
+  },
+  defaultHeroTitle: {
+    color: "white",
+    fontSize: "6.4rem",
+    textAlign: "center",
+    "@media (min-width: 601px)": {
+      fontSize: "10.2rem",
+    },
   },
   defaultHeroSlogan: {
     color: "white",
-    fontSize: "4rem",
+    fontSize: "1.8rem",
+    textAlign: "center",
+    "@media (min-width: 601px)": {
+      fontSize: "4rem",
+    },
   },
   container: {
     display: "flex",
     flexDirection: "column",
     gap: "2.4rem",
     alignItems: "center",
+    justifyContent: "center",
   },
   superHero: {
-    width: "32rem",
-    height: "32rem",
+    width: "16rem",
+    height: "16rem",
     borderRadius: "50%",
+    "@media (min-width: 601px)": {
+      width: "32rem",
+      height: "32rem",
+    },
   },
   socials: {
     display: "flex",
@@ -91,14 +113,12 @@ export default function Hero({ style }: Props) {
       <div {...stylex.props(styles.defaultHero, style)}>
         <div {...stylex.props(styles.defaultHeroTitle, style)}>$mingus</div>
       </div>
-      <div {...stylex.props(styles.defaultHero, style)}>
-        <div {...stylex.props(styles.defaultHeroSlogan, style)}>
-          Reclaiming the liquidity from cat tokens.
-        </div>
+      <div >
+        <FlavorText />
       </div>
       <div {...stylex.props(styles.defaultHero, style)}>
         <div {...stylex.props(styles.container)}>
-          <Card onClick={openDexScreener} {...stylex.props(styles.button)}>
+          <Card onClick={openDexScreener}>
             MINGUS / WETH
             <LazyImage
               src={Arbitrum}

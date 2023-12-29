@@ -11,7 +11,7 @@ const styles = stylex.create({
     fontSize: "2.4rem",
     marginTop: "4rem",
     backgroundColor: colors.choco8,
-    clipPath: "polygon(0 1%,100% 0,100% 100%,0 95%);",
+    clipPath: "polygon(0 1%,100% 0,100% 95%,0 100%);",
     paddingTop: "4rem",
     paddingBottom: "4rem",
     color: "white"
@@ -25,15 +25,10 @@ type Props = {
   style?: StyleXStyles<any>;
 };
 
-export default function Tokenomics({ style }: Props) {
+export default function FlavorText({ style }: Props) {
   return <div {...stylex.props(styles.default, style)}>
-    <u {...stylex.props(styles.title, style)}>Tokenomics</u>
     <ul>
-      <li>100mm supply</li>
-      <li>Initial LP Burned</li>
-      <li>Initial Supply Burn by dev ~11mm MINGUS</li>
-      <li>No team distribution</li>
-      <li>No distributions at all.</li>
+      Reclaiming the liquidity from cat tokens.
     </ul>
   </div>;
 }
