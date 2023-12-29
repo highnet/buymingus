@@ -14,7 +14,8 @@ const styles = stylex.create({
     clipPath: "polygon(0 1%,100% 0,100% 95%,0 100%);",
     paddingTop: "4rem",
     paddingBottom: "4rem",
-    color: "white"
+    color: "white",
+    textAlign: "center",
   },
   title: {
     marginBottom: "2rem",
@@ -27,8 +28,6 @@ type Props = {
 
 export default function FlavorText({ style }: Props) {
   return <div {...stylex.props(styles.default, style)}>
-    <ul>
-      Reclaiming the liquidity from cat tokens.
-    </ul>
+    <p>Reclaiming the liquidity from cat tokens.</p>
   </div>;
 }
