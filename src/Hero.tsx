@@ -6,6 +6,7 @@ import Telegram from "./assets/telegram.png";
 import Twitter from "./assets/twitter.png";
 import Arbitrum from "./assets/arbitrum.png";
 import Camelot from "./assets/camelot.png";
+import Mirror from "./assets/mirror.jpg";
 import LazyImage from "./LazyImage";
 import Card from "./Card";
 
@@ -70,10 +71,15 @@ const openCamelot = () => {
   window.open(url, '_blank')?.focus();
 };
 
+const openMirror = () => {
+  const url = 'https://mirror.xyz/0x43E221c1f948a3858F98D74886B6B940f47B1AfC';
+  window.open(url, '_blank')?.focus();
+};
+
 export default function Hero({ style }: Props) {
   return <div>
     <div {...stylex.props(styles.defaultHero, style)}>
-      <div {...stylex.props(styles.defaultHeroTitle, style)}>Mingus</div>
+      <div {...stylex.props(styles.defaultHeroTitle, style)}>$Mingus</div>
     </div>
     <div {...stylex.props(styles.defaultHero, style)}>
       <div {...stylex.props(styles.container)}>
@@ -84,6 +90,10 @@ export default function Hero({ style }: Props) {
         <Button onClick={openCamelot}>
           CAMELOT
           <LazyImage src={Camelot} style={styles.providerLogo} onClick={openCamelot} />
+        </Button>
+        <Button onClick={openMirror}>
+          Mirror
+          <LazyImage src={Mirror} style={styles.providerLogo} onClick={openMirror} />
         </Button>
         <div {...stylex.props(styles.socials)}>
           <div {...stylex.props(styles.socialLogo)}>
