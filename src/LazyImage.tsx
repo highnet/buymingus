@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 
@@ -9,7 +10,7 @@ const styles = stylex.create({
 });
 
 type Props = {
-  src: string;
+  src: string[];
   onClick?: () => void;
   style?: StyleXStyles<{
     width?: string,
@@ -22,8 +23,21 @@ type Props = {
     borderRadius?: string,
     cursor?: string,
   }>;
+  interval?: number;
 };
 
-export default function LazyImage({ src, onClick, style }: Props) {
-  return <img loading="lazy" src={src} onClick={onClick} {...stylex.props(styles.defaultLazyImage, style)} />;
+export default function LazyImage({ src, onClick, style, interval = 3000 }: Props) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % src.length);
+    }, interval);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [src, interval]);
+
+  return <img loading="lazy" src={src[currentImageIndex]} onClick={onClick} {...stylex.props(styles.defaultLazyImage, style)} />;
 }

@@ -2,6 +2,15 @@ import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import Button from "./Button";
 import SuperHero from "./assets/superhero.jpg";
+import Cat0 from "./assets/cat0.jpg";
+import Cat1 from "./assets/cat1.jpg";
+import Cat2 from "./assets/cat2.jpg";
+import Cat3 from "./assets/cat3.jpg";
+import Cat4 from "./assets/cat4.jpg";
+import Cat5 from "./assets/cat5.jpg";
+import Cat6 from "./assets/cat6.jpg";
+import Cat7 from "./assets/cat7.jpg";
+
 import Telegram from "./assets/telegram.png";
 import Twitter from "./assets/twitter.png";
 import Arbitrum from "./assets/arbitrum.png";
@@ -121,7 +130,7 @@ export default function Hero({ style }: Props) {
           <Card onClick={openDexScreener}>
             MINGUS / WETH
             <LazyImage
-              src={Arbitrum}
+              src={[Arbitrum]}
               style={styles.providerLogo}
               onClick={openDexScreener}
             />
@@ -129,7 +138,7 @@ export default function Hero({ style }: Props) {
           <Button onClick={openCamelot}>
             CAMELOT
             <LazyImage
-              src={Camelot}
+              src={[Camelot]}
               style={styles.providerLogo}
               onClick={openCamelot}
             />
@@ -137,7 +146,7 @@ export default function Hero({ style }: Props) {
           <Button onClick={openRoadmap}>
             Roadmap
             <LazyImage
-              src={RoadMap}
+              src={[RoadMap]}
               style={styles.providerLogo}
               onClick={openRoadmap}
             />
@@ -145,7 +154,7 @@ export default function Hero({ style }: Props) {
           <Button onClick={openMirror}>
             Docs
             <LazyImage
-              src={Mirror}
+              src={[Mirror]}
               style={styles.providerLogo}
               onClick={openMirror}
             />
@@ -153,7 +162,7 @@ export default function Hero({ style }: Props) {
           <div {...stylex.props(styles.socials)}>
             <div {...stylex.props(styles.socialLogo)}>
               <LazyImage
-                src={Twitter}
+                src={[Twitter]}
                 onClick={() =>
                   window.open("https://twitter.com/mingus_arb", "_blank")
                 }
@@ -161,7 +170,7 @@ export default function Hero({ style }: Props) {
             </div>
             <div {...stylex.props(styles.socialLogo)}>
               <LazyImage
-                src={Telegram}
+                src={[Telegram]}
                 onClick={() =>
                   window.open("https://t.me/+5wlA0R4BiMkxMTIx", "_blank")
                 }
@@ -170,7 +179,7 @@ export default function Hero({ style }: Props) {
           </div>
         </div>
         <div>
-          <LazyImage src={SuperHero} style={styles.superHero} />
+          <LazyImage src={[SuperHero, Cat0, Cat1, Cat2, Cat3, Cat4, Cat5, Cat6, Cat7,]} style={styles.superHero} />
         </div>
       </div>
     </div>

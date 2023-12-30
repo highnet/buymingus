@@ -37,7 +37,7 @@ function App() {
   return (
     <>
       <Header />
-      <LazyImage style={styles.logo} src={Logo} />
+      <LazyImage style={styles.logo} src={[Logo]} />
       <Hero />
       <Tokenomics />
       <Disclaimer />
