@@ -36,11 +36,7 @@ export default function FlavorText({ style }: Props) {
     <Carousel
       width={isMobile ? 25 : 80}
       images={[
-        {
-          imageSource: "cat0.jpg",
-          label: "Buy Mingus",
-          supportingText: "https://mingus.co/"
-        },
+        { imageSource: "cat0.jpg", },
         { imageSource: "cat1.jpg" },
         { imageSource: "cat2.jpg" },
         { imageSource: "cat3.jpg" },
