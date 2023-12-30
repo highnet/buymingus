@@ -378,7 +378,14 @@ template {
   display: none;
 }
 
+/* ========================================================================
+ * TRMD3 OVERRIDES
+ * ======================================================================== */
 
 .list-item {
   background-color: transparent !important;
+}
+
+.list-item-content > .text {
+    font-family: 'Anton', sans-serif;
 }
