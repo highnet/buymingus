@@ -38,7 +38,7 @@ type Props = {
 export default function Footer({ style }: Props) {
   return <div {...stylex.props(styles.defaultFooter, style)}>
     <div {...stylex.props(styles.providerText)}>
-      <LazyImage style={styles.providerLogo} src={Arbitrum} />
+      <LazyImage style={styles.providerLogo} src={[Arbitrum]} />
       Powered by Arbitrum One
     </div>
   </div>;
