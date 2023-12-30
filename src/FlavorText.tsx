@@ -37,17 +37,17 @@ export default function FlavorText({ style }: Props) {
       width={isMobile ? 25 : 80}
       images={[
         {
-          imageSource: "/src/assets/cat0.jpg",
+          imageSource: "cat0.jpg",
           label: "Buy Mingus",
           supportingText: "https://mingus.co/"
         },
-        { imageSource: "/src/assets/cat1.jpg" },
-        { imageSource: "/src/assets/cat2.jpg" },
-        { imageSource: "/src/assets/cat3.jpg" },
-        { imageSource: "/src/assets/cat4.jpg" },
-        { imageSource: "/src/assets/cat5.jpg" },
-        { imageSource: "/src/assets/cat6.jpg" },
-        { imageSource: "/src/assets/cat7.jpg" },
+        { imageSource: "cat1.jpg" },
+        { imageSource: "cat2.jpg" },
+        { imageSource: "cat3.jpg" },
+        { imageSource: "cat4.jpg" },
+        { imageSource: "cat5.jpg" },
+        { imageSource: "cat6.jpg" },
+        { imageSource: "cat7.jpg" },
       ]}
     />
   </div>;
