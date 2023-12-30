@@ -1,5 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import './App.css'
+import "trmd3components/trmd3.css";
 import Header from './Header'
 import LazyImage from './LazyImage'
 import Logo from './assets/logo.png'

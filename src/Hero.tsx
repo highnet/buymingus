@@ -1,16 +1,6 @@
 import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import Button from "./Button";
-import SuperHero from "./assets/superhero.jpg";
-import Cat0 from "./assets/cat0.jpg";
-import Cat1 from "./assets/cat1.jpg";
-import Cat2 from "./assets/cat2.jpg";
-import Cat3 from "./assets/cat3.jpg";
-import Cat4 from "./assets/cat4.jpg";
-import Cat5 from "./assets/cat5.jpg";
-import Cat6 from "./assets/cat6.jpg";
-import Cat7 from "./assets/cat7.jpg";
-
 import Telegram from "./assets/telegram.png";
 import Twitter from "./assets/twitter.png";
 import Arbitrum from "./assets/arbitrum.png";
@@ -59,15 +49,6 @@ const styles = stylex.create({
     gap: "2.4rem",
     alignItems: "center",
     justifyContent: "center",
-  },
-  superHero: {
-    width: "16rem",
-    height: "16rem",
-    borderRadius: "50%",
-    "@media (min-width: 601px)": {
-      width: "32rem",
-      height: "32rem",
-    },
   },
   socials: {
     display: "flex",
@@ -177,9 +158,6 @@ export default function Hero({ style }: Props) {
               />
             </div>
           </div>
-        </div>
-        <div>
-          <LazyImage src={[SuperHero, Cat0, Cat1, Cat2, Cat3, Cat4, Cat5, Cat6, Cat7,]} style={styles.superHero} />
         </div>
       </div>
     </div>

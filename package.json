@@ -13,7 +13,9 @@
     "@stylexjs/open-props": "^0.3.0",
     "@stylexjs/stylex": "^0.3.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-responsive": "^9.0.2",
+    "trmd3components": "^1.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
