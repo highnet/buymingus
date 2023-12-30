@@ -1,6 +1,8 @@
 import { colors } from "@stylexjs/open-props/lib/colors.stylex";
 import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
+import List from "trmd3components/List";
+import ListItem from "trmd3components/ListItem";
 
 const styles = stylex.create({
   default: {
@@ -28,12 +30,53 @@ type Props = {
 export default function Tokenomics({ style }: Props) {
   return <div {...stylex.props(styles.default, style)}>
     <u {...stylex.props(styles.title, style)}>Tokenomics</u>
-    <ul>
-      <li>100mm supply</li>
-      <li>Initial LP Burned</li>
-      <li>Initial Supply Burn by dev ~11mm MINGUS</li>
-      <li>No team distribution</li>
-      <li>No distributions at all.</li>
-    </ul>
+
+    <List>
+      <ListItem
+        className="list-item-dark-theme"
+        size="2-line"
+        leadingElement="icon"
+        iconName="paid"
+        title="100mm supply"
+      >
+        Best believe it
+      </ListItem>
+      <ListItem
+        className="list-item-dark-theme"
+        size="2-line"
+        leadingElement="icon"
+        iconName="local_fire_department"
+        title="Initial LP Burned"
+      >
+        cya l8r LP
+      </ListItem>
+      <ListItem
+        className="list-item-dark-theme"
+        size="2-line"
+        leadingElement="icon"
+        iconName="developer_board"
+        title="Initial Supply Burn by dev ~11mm MINGUS"
+      >
+        you know it
+      </ListItem>
+      <ListItem
+        className="list-item-dark-theme"
+        size="2-line"
+        leadingElement="icon"
+        iconName="diversity_3"
+        title="No team distribution"
+      >
+        Not even a little bit
+      </ListItem>
+      <ListItem
+        className="list-item-dark-theme"
+        size="2-line"
+        leadingElement="icon"
+        iconName="block"
+        title="No distributions at all."
+      >
+        No presale, no airdrop
+      </ListItem>
+    </List>
   </div>;
 }

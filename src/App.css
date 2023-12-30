@@ -377,3 +377,8 @@ template {
 [hidden] {
   display: none;
 }
+
+
+.list-item {
+  background-color: transparent !important;
+}
