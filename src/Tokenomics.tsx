@@ -37,27 +37,27 @@ export default function Tokenomics({ style }: Props) {
         size="2-line"
         leadingElement="icon"
         iconName="paid"
-        title="100mm supply"
+        title="Total Supply"
       >
-        Best believe it
+        100 million tokens
       </ListItem>
       <ListItem
         className="list-item-dark-theme"
         size="2-line"
         leadingElement="icon"
         iconName="local_fire_department"
-        title="Initial LP Burned"
+        title="Initial Liquidity Pool"
       >
-        cya l8r LP
+        Burned
       </ListItem>
       <ListItem
         className="list-item-dark-theme"
         size="2-line"
         leadingElement="icon"
         iconName="developer_board"
-        title="Initial Supply Burn by dev ~11mm MINGUS"
+        title="Initial Supply Burn"
       >
-        you know it
+        ~11mm MINGUS
       </ListItem>
       <ListItem
         className="list-item-dark-theme"
