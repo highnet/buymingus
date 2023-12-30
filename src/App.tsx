@@ -18,13 +18,17 @@ const styles = stylex.create({
     position: 'absolute',
     ":hover":
     {
-      transform: 'translateY(-10rem) rotate(360deg)',
+      transform: 'translateY(-8rem) rotate(360deg)',
     },
     "@media (min-width: 601px)": {
       width: "18rem",
       height: "18rem",
       transform: 'translateY(-9rem)',
       margin: "0 2.4rem",
+      ":hover":
+      {
+        transform: 'translateY(-9rem) rotate(360deg)',
+      },
     },
   }
 });
