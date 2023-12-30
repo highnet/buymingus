@@ -43,7 +43,7 @@ export default function Tokenomics({ style }: Props) {
     <div {...stylex.props(styles.container)}>
       <p>
         <u>Disclaimer</u>
-        <p>
+        <p> { /* what the FUCK is this? <p> cannot appear as a descendant of <p> */}
           Please read this disclaimer carefully.
         </p>
         <p {...stylex.props(styles.smaller, style)}>
