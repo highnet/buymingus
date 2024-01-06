@@ -1,8 +1,8 @@
 import { colors } from "@stylexjs/open-props/lib/colors.stylex";
 import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
-import { useMediaQuery } from 'react-responsive';
-import Carousel from "trmd3components/Carousel";
+import Button from "./Button";
+import { Link } from "@tanstack/react-router";
 
 const styles = stylex.create({
   default: {
@@ -22,6 +22,10 @@ const styles = stylex.create({
   title: {
     marginBottom: "2rem",
   },
+  link: {
+    textDecoration: "none",
+    color: "inherit",
+  }
 });
 
 type Props = {
@@ -29,22 +33,11 @@ type Props = {
 };
 
 export default function FlavorText({ style }: Props) {
-  const isMobile = useMediaQuery({ maxDeviceWidth: 601 });
 
   return <div {...stylex.props(styles.default, style)}>
     <p>Reclaiming the liquidity from cat tokens.</p>
-    <Carousel
-      width={isMobile ? 25 : 80}
-      images={[
-        { imageSource: "cat0.jpg", },
-        { imageSource: "cat1.jpg" },
-        { imageSource: "cat2.jpg" },
-        { imageSource: "cat3.jpg" },
-        { imageSource: "cat4.jpg" },
-        { imageSource: "cat5.jpg" },
-        { imageSource: "cat6.jpg" },
-        { imageSource: "cat7.jpg" },
-      ]}
-    />
+    <Button large>
+      <Link {...stylex.props(styles.link)} to="/incinerate" >INCINERATE CATS</Link>
+    </Button>
   </div>;
 }

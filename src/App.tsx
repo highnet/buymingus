@@ -4,12 +4,13 @@ import "trmd3components/trmd3.css";
 import Header from './Header'
 import LazyImage from './LazyImage'
 import Logo from './assets/logo.png'
-import Hero from './Hero';
-import Tokenomics from './Tokenomics';
-import Disclaimer from './Disclaimer';
 import Footer from './Footer';
+import { Outlet } from '@tanstack/react-router';
 
 const styles = stylex.create({
+  root: {
+    border: ".1rem solid white",
+  },
   logo: {
     width: "12rem",
     height: "12rem",
@@ -38,11 +39,12 @@ function App() {
   return (
     <>
       <Header />
-      <LazyImage style={styles.logo} src={[Logo]} />
-      <Hero />
-      <Tokenomics />
-      <Disclaimer />
+      <div {...stylex.props(styles.root)}>
+        <LazyImage style={styles.logo} src={[Logo]} />
+        <Outlet />
+      </div>
       <Footer />
+
     </>
   )
 }
