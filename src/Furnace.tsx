@@ -23,7 +23,12 @@ const styles = stylex.create({
     backgroundColor: colors.choco8,
     paddingTop: "3rem",
     color: "white",
-
+    "@media (min-width: 601px)": {
+      width: "50vw",
+      height: "80vh",
+      paddingTop: "0",
+      borderRadius: "1.6rem",
+    },
   },
   link: {
     textDecoration: "none",
