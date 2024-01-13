@@ -5,7 +5,7 @@ import Button from "./Button";
 import Icon from "trmd3components/Icon";
 import { colors } from "@stylexjs/open-props/lib/colors.stylex";
 import { useState } from "react";
-import TextField from "trmd3components/TextField";
+import { Input } from "@/components/ui/input"
 
 enum ContextState {
   Incinerate = 'incinerate',
@@ -23,12 +23,7 @@ const styles = stylex.create({
     backgroundColor: colors.choco8,
     paddingTop: "3rem",
     color: "white",
-    "@media (min-width: 601px)": {
-      width: "30vw",
-      height: "80vh",
-      paddingTop: "0",
-      borderRadius: "1.6rem",
-    },
+
   },
   link: {
     textDecoration: "none",
@@ -89,21 +84,9 @@ function Incinerate() {
     {...stylex.props(styles.incinerate)}
   >
     You Pay
-
-    <TextField
-      configuration="filled"
-      textConfiguration="label-placeholder"
-      validRegex="^$|^[0-9]+$"
-    >
-    </TextField>
+    <Input />
     You Get
-
-    <TextField
-      configuration="filled"
-      textConfiguration="label-placeholder"
-      validRegex="^$|^[0-9]+$"
-    >
-    </TextField>
+    <Input />
 
   </div>;
 }

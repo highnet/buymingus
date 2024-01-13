@@ -10,6 +10,7 @@ import { Outlet } from '@tanstack/react-router';
 const styles = stylex.create({
   root: {
     border: ".1rem solid white",
+
   },
   logo: {
     width: "12rem",
