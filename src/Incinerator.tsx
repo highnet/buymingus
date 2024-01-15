@@ -31,8 +31,8 @@ type Props = {
 };
 
 export default function Incinerator({ style }: Props) {
-  return (
 
+  return (
     <div {...stylex.props(styles.default, style)}>
       <div {...stylex.props(styles.container)}>
         <ConnectButton />

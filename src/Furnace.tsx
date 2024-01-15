@@ -4,13 +4,15 @@ import { Link } from "@tanstack/react-router";
 import Button from "./Button";
 import Icon from "trmd3components/Icon";
 import { colors } from "@stylexjs/open-props/lib/colors.stylex";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input"
+import { useAccount } from 'wagmi'
+import { Separator } from "@/components/ui/separator"
+
 
 enum ContextState {
   Incinerate = 'incinerate',
   About = 'about',
-  Settings = 'settings',
 }
 
 const styles = stylex.create({
@@ -45,8 +47,11 @@ const styles = stylex.create({
     padding: "0 1.6rem 0 1.6rem",
     gap: "1.6rem",
   },
-  title: {
+  contextHeader: {
     fontSize: "2rem",
+    ":hover": {
+      textDecoration: "underline",
+    },
   },
   contextSwitcher: {
     backgroundColor: "transparent",
@@ -74,6 +79,12 @@ const styles = stylex.create({
     padding: '0 1.6rem 0 1.6rem',
     fontSize: '1.4rem',
   },
+  unauthorized: {
+    textAlign: 'center',
+    fontSize: '2.4rem',
+    marginTop: '1.6rem',
+    marginBottom: '1.6rem',
+  }
 });
 
 function Settings({ visible }: { visible: boolean }) {
@@ -81,6 +92,14 @@ function Settings({ visible }: { visible: boolean }) {
     {...stylex.props(styles.settings, visible && styles.settingsVisible)}
   >
     Settings
+  </div>;
+}
+
+function Unauthorized() {
+  return <div
+    {...stylex.props(styles.unauthorized)}
+  >
+    Please Connect Your Wallet
   </div>;
 }
 
@@ -110,11 +129,19 @@ type Props = {
 
 export default function Furnace({ style }: Props) {
 
-  const [contextState, setContextState] = useState<ContextState>(ContextState.Incinerate); // Use the ContextState type
+  const [contextState, setContextState] = useState<ContextState>(ContextState.About);
   const [showSettings, setShowSettings] = useState(false);
+  const account = useAccount();
+
+  useEffect(() => {
+    if (account.status === 'connected') {
+      setContextState(ContextState.Incinerate);
+    }
+  }, [account.status]);
 
   let contextDisplay;
   switch (contextState) {
+
     case 'incinerate':
       contextDisplay = <Incinerate />;
       break;
@@ -148,23 +175,27 @@ export default function Furnace({ style }: Props) {
         </Link>
       </div>
       <Settings visible={showSettings} />
+      <Separator />
       <div {...stylex.props(styles.contextMenu)}>
         <button
           {...stylex.props(styles.contextSwitcher, contextState !== ContextState.Incinerate && styles.inactiveContext)}
-          onClick={() => setContextState(ContextState.Incinerate)}>
-          <p {...stylex.props(styles.title)}>
+          onClick={() => setContextState(ContextState.Incinerate)}
+        >
+          <p {...stylex.props(styles.contextHeader)}>
             Incinerate
           </p>
         </button>
         <button
           {...stylex.props(styles.contextSwitcher, contextState !== ContextState.About && styles.inactiveContext)}
-          onClick={() => setContextState(ContextState.About)}>
-          <p {...stylex.props(styles.title)}>
+          onClick={() => setContextState(ContextState.About)}
+        >
+          <p {...stylex.props(styles.contextHeader)}>
             About
           </p>
         </button>
       </div>
       <div>
+        {account.status !== 'connected' && <Unauthorized />}
         {contextDisplay}
       </div>
     </div >
