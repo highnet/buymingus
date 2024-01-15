@@ -6,9 +6,8 @@ import Icon from "trmd3components/Icon";
 import { colors } from "@stylexjs/open-props/lib/colors.stylex";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input"
-import { useAccount } from 'wagmi'
 import { Separator } from "@/components/ui/separator"
-
+import { useAccount } from 'wagmi'
 
 enum ContextState {
   Incinerate = 'incinerate',
