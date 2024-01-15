@@ -2,6 +2,7 @@ import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import Furnace from "./Furnace";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAccount } from "wagmi";
 
 const styles = stylex.create({
   default: {
@@ -20,8 +21,11 @@ const styles = stylex.create({
     width: "fit-content",
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-end",
-    gap: "1.6rem",
+    alignItems: "center",
+    "@media (min-width: 601px)": {
+      alignItems: "flex-end",
+
+    },
   },
 
 });
@@ -31,11 +35,13 @@ type Props = {
 };
 
 export default function Incinerator({ style }: Props) {
+  const account = useAccount();
 
   return (
     <div {...stylex.props(styles.default, style)}>
       <div {...stylex.props(styles.container)}>
-        <ConnectButton />
+
+        {account.status === "connected" && <ConnectButton />}
         <Furnace />
       </div>
     </div>

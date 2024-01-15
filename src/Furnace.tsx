@@ -6,8 +6,9 @@ import Icon from "trmd3components/Icon";
 import { colors } from "@stylexjs/open-props/lib/colors.stylex";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
 import { useAccount } from 'wagmi'
+import { Separator } from "@radix-ui/react-separator";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 enum ContextState {
   Incinerate = 'incinerate',
@@ -79,10 +80,7 @@ const styles = stylex.create({
     fontSize: '1.4rem',
   },
   unauthorized: {
-    textAlign: 'center',
-    fontSize: '2.4rem',
-    marginTop: '1.6rem',
-    marginBottom: '1.6rem',
+    fontSize: '2rem',
   }
 });
 
@@ -98,7 +96,7 @@ function Unauthorized() {
   return <div
     {...stylex.props(styles.unauthorized)}
   >
-    Please Connect Your Wallet
+    <ConnectButton />
   </div>;
 }
 
@@ -163,6 +161,7 @@ export default function Furnace({ style }: Props) {
             </Icon>
           </Button>
         </Link>
+        {account.status !== 'connected' && <Unauthorized />}
         <Link
           {...stylex.props(styles.link)}
         >
@@ -194,7 +193,6 @@ export default function Furnace({ style }: Props) {
         </button>
       </div>
       <div>
-        {account.status !== 'connected' && <Unauthorized />}
         {contextDisplay}
       </div>
     </div >
