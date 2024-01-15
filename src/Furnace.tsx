@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { useAccount } from 'wagmi'
 import { Separator } from "@radix-ui/react-separator";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Address } from "viem";
 
 enum ContextState {
   Incinerate = 'incinerate',
@@ -101,6 +102,11 @@ function Unauthorized() {
 }
 
 function Incinerate() {
+  const catIncineratorContractAddress = '0x825F84F87Ed4fE096Ea4cb5EBa84F9Ed39D83ada' as Address;
+  const account = useAccount();
+
+  console.log(catIncineratorContractAddress, account.status);
+
   return <div
     {...stylex.props(styles.incinerate)}
   >

@@ -24,7 +24,6 @@ const styles = stylex.create({
     alignItems: "center",
     "@media (min-width: 601px)": {
       alignItems: "flex-end",
-
     },
   },
 
@@ -40,7 +39,6 @@ export default function Incinerator({ style }: Props) {
   return (
     <div {...stylex.props(styles.default, style)}>
       <div {...stylex.props(styles.container)}>
-
         {account.status === "connected" && <ConnectButton />}
         <Furnace />
       </div>
