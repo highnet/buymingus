@@ -3,7 +3,6 @@ import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import { Link } from "@tanstack/react-router";
 import Button from "./Button";
 import Icon from "trmd3components/Icon";
-import { colors } from "@stylexjs/open-props/lib/colors.stylex";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input"
 import { useAccount } from 'wagmi'
@@ -18,6 +17,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import * as z from "zod"
+import { Form, FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "./components/ui/form";
 
 enum ContextState {
   Incinerate = 'incinerate',
@@ -29,14 +32,12 @@ const styles = stylex.create({
     display: "flex",
     flexDirection: "column",
     width: "100vw",
-    height: "100vh",
     border: ".1rem solid black",
-    backgroundColor: colors.brown10,
+    background: "linear-gradient(251deg, rgba(56,121,171,1) 0%, rgba(0,145,255,1) 100%)",
     paddingTop: "3rem",
     color: "white",
     "@media (min-width: 601px)": {
       width: "50vw",
-      height: "80vh",
       paddingTop: "0",
       borderRadius: "1.6rem",
     },
@@ -151,11 +152,22 @@ function generateMyTokenList() {
   };
 }
 
-function Incinerate() {
-  const catIncineratorContractAddress = '0x825F84F87Ed4fE096Ea4cb5EBa84F9Ed39D83ada' as Address;
-  const account = useAccount();
+const formSchema = z.object({
+  inputAmount: z.string().min(1, {
+    message: "amount must be at least 1 characters.",
+  }),
+  inputToken: z.string(),
+  outputAmount: z.string().min(1, {
+    message: "outputAmount must be at least 1 characters.",
+  }),
+  outputToken: z.string(),
+})
 
-  console.log(catIncineratorContractAddress, account.status);
+function Incinerate() {
+  // const catIncineratorContractAddress = '0x825F84F87Ed4fE096Ea4cb5EBa84F9Ed39D83ada' as Address;
+  // const account = useAccount();
+
+  // console.log(catIncineratorContractAddress, account.status);
 
   // generate your token list however you like.
   const tokenList: TokenList = generateMyTokenList();
@@ -164,44 +176,115 @@ function Incinerate() {
   // validateMyTokenList(myList, schema);
 
   // print the resulting JSON to stdout
-  console.log(JSON.stringify(tokenList));
+  // console.log(JSON.stringify(tokenList));
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      inputAmount: "",
+      inputToken: tokenList.tokens[0].address,
+      outputAmount: "",
+      outputToken: tokenList.tokens[0].address,
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
+  };
 
   return <div
     {...stylex.props(styles.incinerate)}
   >
-    Amount
-    <div {...stylex.props(styles.inputWithPill)}>
-      <Input />
-      <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder={tokenList.tokens[0].name} />
-        </SelectTrigger>
-        <SelectContent>
-          {tokenList.tokens.map((token, index) => (
-            <SelectItem key={index} value={token.address}>
-              {token.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
-    <div {...stylex.props(styles.swapIcon)}>
-      <Icon >swap_vertical_circle</Icon>
-    </div>
-    You Get
-    <div {...stylex.props(styles.inputWithPill)}>
-      <Input />
-      <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Mingus" />
-        </SelectTrigger>
-      </Select>
-    </div>
-    <div {...stylex.props(styles.incinerateButton)}>
-      <Button>
-        Incinerate
-      </Button>
-    </div>
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        Amount
+        <div {...stylex.props(styles.inputWithPill)}>
+          <FormField
+            control={form.control}
+            name="inputAmount"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="inputToken"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Select onValueChange={field.onChange} {...field}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder={tokenList.tokens[0].name} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {tokenList.tokens.map((token, index) => (
+                        <SelectItem key={index} value={token.address}>
+                          {token.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div {...stylex.props(styles.swapIcon)}>
+          <Icon >swap_vertical_circle</Icon>
+        </div>
+        You Get
+        <div {...stylex.props(styles.inputWithPill)}>
+          <FormField
+            control={form.control}
+            name="outputAmount"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="outputToken"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Select onValueChange={field.onChange} {...field}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder={tokenList.tokens[0].name} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {tokenList.tokens.map((token, index) => (
+                        <SelectItem key={index} value={token.address}>
+                          {token.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div {...stylex.props(styles.incinerateButton)}>
+          <Button type="submit">
+            Incinerate
+          </Button>
+        </div>
+      </form>
+    </FormProvider>
 
   </div>;
 }

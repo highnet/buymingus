@@ -1,4 +1,3 @@
-import { colors } from "@stylexjs/open-props/lib/colors.stylex";
 import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import Button from "./Button";
@@ -12,12 +11,13 @@ const styles = stylex.create({
     justifyContent: "center",
     fontSize: "2.4rem",
     marginTop: "4rem",
-    backgroundColor: colors.choco8,
+    backgroundColor: "#3879AB",
     clipPath: "polygon(0 1%,100% 0,100% 95%,0 100%);",
     paddingTop: "4rem",
     paddingBottom: "4rem",
     color: "white",
     textAlign: "center",
+    gap: "2rem",
   },
   title: {
     marginBottom: "2rem",

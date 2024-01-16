@@ -12,7 +12,7 @@ const styles = stylex.create({
     justifyContent: "center",
     fontSize: "2.4rem",
     marginTop: "4rem",
-    backgroundColor: colors.choco8,
+    backgroundColor: "#0091FF",
     clipPath: "polygon(0 1%,100% 0,100% 100%,0 95%);",
     paddingTop: "4rem",
     paddingBottom: "4rem",
@@ -20,6 +20,7 @@ const styles = stylex.create({
   },
   title: {
     marginBottom: "2rem",
+    fontSize: "4.2rem",
   },
 });
 
@@ -30,7 +31,6 @@ type Props = {
 export default function Tokenomics({ style }: Props) {
   return <div {...stylex.props(styles.default, style)}>
     <u {...stylex.props(styles.title, style)}>Tokenomics</u>
-
     <List>
       <ListItem
         className="list-item-dark-theme"
