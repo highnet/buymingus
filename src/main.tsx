@@ -10,19 +10,31 @@ import Incinerator from './Incinerator.tsx';
 
 import '@rainbow-me/rainbowkit/styles.css';
 
-import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import { http, createConfig, WagmiProvider } from 'wagmi'
+import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { publicProvider } from 'wagmi/providers/public';
 import {
   polygon
 
 } from 'wagmi/chains';
 
-export const config = createConfig({
-  chains: [polygon],
-  transports: {
-    [polygon.id]: http(),
-  },
-})
+const { chains, publicClient } = configureChains(
+  [polygon],
+  [publicProvider()]
+);
+
+const { connectors } = getDefaultWallets({
+  appName: 'Mingus Incinerator',
+  projectId: 'c543b09b1ec964af38e82af1d9689305',
+  chains,
+});
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+});
+
 
 const rootRoute = new RootRoute({
   component: () => (
@@ -60,10 +72,10 @@ declare module '@tanstack/react-router' {
 }
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <WagmiProvider config={config}>
-      <RainbowKitProvider chains={[...config.chains]}>
+    <WagmiConfig config={wagmiConfig}>
+      <RainbowKitProvider chains={chains}>
         <RouterProvider router={router} />
       </RainbowKitProvider>
-    </WagmiProvider>
+    </WagmiConfig>
   </React.StrictMode>,
 )

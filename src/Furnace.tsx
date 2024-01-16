@@ -7,7 +7,6 @@ import { colors } from "@stylexjs/open-props/lib/colors.stylex";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input"
 import { useAccount } from 'wagmi'
-import { Separator } from "@radix-ui/react-separator";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Address } from "viem";
 
@@ -179,7 +178,6 @@ export default function Furnace({ style }: Props) {
         </Link>
       </div>
       <Settings visible={showSettings} />
-      <Separator />
       <div {...stylex.props(styles.contextMenu)}>
         <button
           {...stylex.props(styles.contextSwitcher, contextState !== ContextState.Incinerate && styles.inactiveContext)}
