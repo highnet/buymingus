@@ -200,7 +200,7 @@ function Incinerate() {
       sellAmount: '10000000000000000',
     };
 
-    const headers = { '0x-api-key': '66d48b74-db48-4b8d-94cb-2222c535263e' };
+    const headers = { '0x-api-key': import.meta.env.VITE_ZEROX_API_KEY };
 
     try {
       const response = await fetch(`https://polygon.api.0x.org/swap/v1/price?${new URLSearchParams(params).toString()}`, { headers });

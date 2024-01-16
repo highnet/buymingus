@@ -48,17 +48,23 @@ const indexRoute = new Route({
       <Disclaimer />
     </>
   ),
-})
+});
 
 const incinerateRoute = new Route({
-  getParentRoute: () => rootRoute, path: 'incinerate', component: () => (
-    <Incinerator />
-  ),
-})
+  getParentRoute: () => rootRoute, path: 'incinerate', component: () => {
+    if (import.meta.env.VITE_ENV !== "production") {
+      return (
+        <Incinerator />
+      )
+    } else {
+      return null;
+    }
+  }
+});
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
-  incinerateRoute
+  incinerateRoute,
 ])
 
 const router = new Router({ routeTree })

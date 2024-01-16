@@ -36,8 +36,12 @@ export default function FlavorText({ style }: Props) {
 
   return <div {...stylex.props(styles.default, style)}>
     <p>Reclaiming the liquidity from cat tokens.</p>
-    <Button large>
-      <Link {...stylex.props(styles.link)} to="/incinerate" >INCINERATE CATS</Link>
-    </Button>
+
+    {import.meta.env.VITE_ENV !== "production" &&
+      (
+        <Button large>
+          <Link {...stylex.props(styles.link)} to="/incinerate" >INCINERATE CATS</Link>
+        </Button>
+      )}
   </div>;
 }
