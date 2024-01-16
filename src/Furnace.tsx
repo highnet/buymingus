@@ -10,6 +10,14 @@ import { useAccount } from 'wagmi'
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Address } from "viem";
 import { TokenList } from '@uniswap/token-lists'
+import { Separator } from "@/components/ui/separator"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 enum ContextState {
   Incinerate = 'incinerate',
@@ -23,7 +31,7 @@ const styles = stylex.create({
     width: "100vw",
     height: "100vh",
     border: ".1rem solid black",
-    backgroundColor: colors.choco8,
+    backgroundColor: colors.brown10,
     paddingTop: "3rem",
     color: "white",
     "@media (min-width: 601px)": {
@@ -48,8 +56,13 @@ const styles = stylex.create({
     padding: "0 1.6rem 0 1.6rem",
     gap: "1.6rem",
   },
+  contextMenuWrapper: {
+    paddingRight: "1rem",
+    paddingLeft: "1rem"
+  },
   contextHeader: {
     fontSize: "2rem",
+    padding: "0.8rem 0 0.8rem 0",
     ":hover": {
       textDecoration: "underline",
     },
@@ -73,15 +86,32 @@ const styles = stylex.create({
     height: "6.4rem",
   },
   incinerate: {
-    padding: '0 1.6rem 0 1.6rem',
+    padding: '1.6rem',
     fontSize: '1.4rem',
+    display: 'flex',
+    flexDirection: 'column',
   },
   about: {
-    padding: '0 1.6rem 0 1.6rem',
+    padding: '1.6rem',
     fontSize: '1.4rem',
   },
   unauthorized: {
     fontSize: '2rem',
+  },
+  inputWithPill: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '0.8rem',
+  },
+  swapIcon: {
+    transform: 'scale(1.8)',
+    pointerEvents: 'none',
+    padding: '2rem 0 1rem 0',
+  },
+  incinerateButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '2.4rem 0 0 0',
   }
 });
 
@@ -103,11 +133,11 @@ function Unauthorized() {
 
 function generateMyTokenList() {
   return {
-    name:	"Mingus Bridge Token List",
-    timestamp:	"2024-01-16T11:52:32.625Z",
+    name: "Mingus Bridge Token List",
+    timestamp: "2024-01-16T11:52:32.625Z",
     version: {
-      major:	1,
-      minor:	0,
+      major: 1,
+      minor: 0,
       patch: 0,
     },
     tokens: [{
@@ -128,21 +158,50 @@ function Incinerate() {
   console.log(catIncineratorContractAddress, account.status);
 
   // generate your token list however you like.
-  const myList: TokenList = generateMyTokenList();
+  const tokenList: TokenList = generateMyTokenList();
 
   // use a tool like `ajv` to validate your generated token list
   // validateMyTokenList(myList, schema);
 
   // print the resulting JSON to stdout
-  console.log(JSON.stringify(myList));
+  console.log(JSON.stringify(tokenList));
 
   return <div
     {...stylex.props(styles.incinerate)}
   >
     Amount
-    <Input />
+    <div {...stylex.props(styles.inputWithPill)}>
+      <Input />
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder={tokenList.tokens[0].name} />
+        </SelectTrigger>
+        <SelectContent>
+          {tokenList.tokens.map((token, index) => (
+            <SelectItem key={index} value={token.address}>
+              {token.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+    <div {...stylex.props(styles.swapIcon)}>
+      <Icon >swap_vertical_circle</Icon>
+    </div>
     You Get
-    <Input />
+    <div {...stylex.props(styles.inputWithPill)}>
+      <Input />
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Mingus" />
+        </SelectTrigger>
+      </Select>
+    </div>
+    <div {...stylex.props(styles.incinerateButton)}>
+      <Button>
+        Incinerate
+      </Button>
+    </div>
 
   </div>;
 }
@@ -208,24 +267,29 @@ export default function Furnace({ style }: Props) {
         </Link>
       </div>
       <Settings visible={showSettings} />
-      <div {...stylex.props(styles.contextMenu)}>
-        <button
-          {...stylex.props(styles.contextSwitcher, contextState !== ContextState.Incinerate && styles.inactiveContext)}
-          onClick={() => setContextState(ContextState.Incinerate)}
-        >
-          <p {...stylex.props(styles.contextHeader)}>
-            Incinerate
-          </p>
-        </button>
-        <button
-          {...stylex.props(styles.contextSwitcher, contextState !== ContextState.About && styles.inactiveContext)}
-          onClick={() => setContextState(ContextState.About)}
-        >
-          <p {...stylex.props(styles.contextHeader)}>
-            About
-          </p>
-        </button>
+      <div {...stylex.props(styles.contextMenuWrapper)} >
+        <Separator />
+        <div {...stylex.props(styles.contextMenu)}>
+          <button
+            {...stylex.props(styles.contextSwitcher, contextState !== ContextState.Incinerate && styles.inactiveContext)}
+            onClick={() => setContextState(ContextState.Incinerate)}
+          >
+            <p {...stylex.props(styles.contextHeader)}>
+              Furnace
+            </p>
+          </button>
+          <button
+            {...stylex.props(styles.contextSwitcher, contextState !== ContextState.About && styles.inactiveContext)}
+            onClick={() => setContextState(ContextState.About)}
+          >
+            <p {...stylex.props(styles.contextHeader)}>
+              About
+            </p>
+          </button>
+        </div>
+        <Separator />
       </div>
+
       <div>
         {contextDisplay}
       </div>
