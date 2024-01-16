@@ -187,10 +187,28 @@ function Incinerate() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+
+    console.log(values);
+
+    const params = {
+      // Not all token symbols are supported. The address of the token should be used instead.
+      sellToken: values.inputToken, // OmniCat ON POLYGON
+      buyToken: '0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed', // axlUSDC ON POLYGON
+      sellAmount: '10000000000000000',
+    };
+
+    const headers = { '0x-api-key': '66d48b74-db48-4b8d-94cb-2222c535263e' };
+
+    try {
+      const response = await fetch(`https://polygon.api.0x.org/swap/v1/price?${new URLSearchParams(params).toString()}`, { headers });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   return <div
