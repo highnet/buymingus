@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { useAccount } from 'wagmi'
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Address } from "viem";
-import { TokenList, schema } from '@uniswap/token-lists'
+import { TokenList } from '@uniswap/token-lists'
 
 enum ContextState {
   Incinerate = 'incinerate',
@@ -110,7 +110,14 @@ function generateMyTokenList() {
       minor:	0,
       patch: 0,
     },
-    tokens: [],
+    tokens: [{
+      chainId: 137,
+      address: '0x9e20461bc2c4c980f62f1B279D71734207a6A356',
+      name: 'OmniCat',
+      symbol: 'OMNI',
+      decimals: 18,
+      logoURI: 'https://assets.coingecko.com/coins/images/33917/standard/2023-12-21_21.39.10.jpg?1703321588',
+    }],
   };
 }
 
