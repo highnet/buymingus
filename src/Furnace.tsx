@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input"
 import { useAccount } from 'wagmi'
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Address } from "viem";
 import { TokenList } from '@uniswap/token-lists'
 import { Separator } from "@/components/ui/separator"
 import {
@@ -18,9 +17,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import * as z from "zod"
-import { Form, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "./components/ui/form";
+import { FormField, FormItem, FormControl, FormMessage } from "./components/ui/form";
 
 enum ContextState {
   Incinerate = 'incinerate',
@@ -192,7 +191,7 @@ function Incinerate() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
-  };
+  }
 
   return <div
     {...stylex.props(styles.incinerate)}

@@ -1,4 +1,3 @@
-import { colors } from "@stylexjs/open-props/lib/colors.stylex";
 import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import List from "trmd3components/List";
@@ -26,7 +25,7 @@ const styles = stylex.create({
 
 type Props = {
   style?: StyleXStyles<any>;
-};
+}
 
 export default function Tokenomics({ style }: Props) {
   return <div {...stylex.props(styles.default, style)}>
