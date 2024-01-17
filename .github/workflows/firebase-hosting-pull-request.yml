@@ -19,6 +19,6 @@ jobs:
           VITE_ZEROX_API_KEY: '${{ secrets.VITE_ZEROX_API_KEY }}'
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          repoToken: '${{ secrets.SECRET_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MINGUS_FDBA7 }}'
           projectId: mingus-fdba7
