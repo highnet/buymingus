@@ -1,7 +1,6 @@
 import stylex from "@stylexjs/stylex";
-import { ReactNode, useLayoutEffect, useRef } from "react";
+import { ReactNode, useLayoutEffect, useRef, useState } from "react";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
-import { colors } from '@stylexjs/open-props/lib/colors.stylex'
 
 const styles = stylex.create({
   defaultButton: {
@@ -9,12 +8,12 @@ const styles = stylex.create({
     jusstifyContent: "center",
     alignItems: "center",
     gap: "1.6rem",
-    border: `0.1rem solid ${colors.choco6}`,
+    border: `0.1rem solid #FF9900`,
     borderRadius: "0.8rem",
-    background: `linear-gradient(to right, ${colors.yellow5} 50%, ${colors.choco8} 50%)`,
+    background: `linear-gradient(to right, #FF9900 50%, #0091FF 50%)`,
     backgroundSize: '200%',
     backgroundPosition: 'right bottom',
-    color: colors.teal0,
+    color: "white",
     padding: "0.8rem 1.6rem",
     cursor: "pointer",
     transition: "all 0.2s ease-in-out",
@@ -29,16 +28,32 @@ const styles = stylex.create({
     },
   },
 
+  largeButton: {
+    fontSize: "3.2rem",
+    padding: "1.6rem 3.2rem",
+    "@media (min-width: 601px)": {
+      fontSize: "7.2rem",
+    },
+  },
+  hover: {
+    backgroundPosition: 'left bottom',
+    scale: 1.3
+  }
+
 });
 
 type Props = {
   children?: ReactNode;
   style?: StyleXStyles<any>;
   onClick?: () => void;
+  large?: boolean;
+  toggleable?: boolean;
+  type?: "button" | "submit" | "reset";
 };
 
-export default function Button({ children, style, onClick }: Props) {
-  const buttonRef = useRef<HTMLDivElement>(null);
+export default function Button({ children, style, onClick, large, toggleable, type }: Props) {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [isToggled, setIsToggled] = useState(false); // Add a new state for toggling
 
   useLayoutEffect(() => {
     const randomRotation = Math.floor(Math.random() * 4) - 2;
@@ -47,5 +62,22 @@ export default function Button({ children, style, onClick }: Props) {
     }
   }, []);
 
-  return <div ref={buttonRef} {...stylex.props(styles.defaultButton, style)} onClick={onClick}>{children}</div>;
+  const handleClick = () => {
+    if (toggleable) {
+      setIsToggled(!isToggled); // Toggle the state when the button is clicked
+    }
+    if (onClick) {
+      onClick();
+    }
+  };
+
+  return (
+    <button
+      type={type} // Use the type prop here
+      ref={buttonRef}
+      {...stylex.props(styles.defaultButton, large ? styles.largeButton : null, (isToggled ? styles.hover : null), style)}
+      onClick={handleClick}>
+      {children}
+    </button>
+  );
 }

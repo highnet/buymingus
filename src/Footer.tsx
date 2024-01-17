@@ -14,7 +14,6 @@ const styles = stylex.create({
     color: "white",
     backgroundColor: "black",
     padding: "3.2rem",
-    marginTop: "4rem",
     fontSize: "1.6rem",
     "@media (min-width: 601px)": {
       alignItems: "flex-end",
