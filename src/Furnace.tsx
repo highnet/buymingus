@@ -199,9 +199,9 @@ function Incinerate() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       inputAmount: "",
-      inputToken: tokenList.tokens[0].address,
+      inputToken: tokenList.tokens[1].address, // omnicat
       outputAmount: "",
-      outputToken: tokenList.tokens[0].address,
+      outputToken: tokenList.tokens[0].address, // mingus
     },
   });
 
