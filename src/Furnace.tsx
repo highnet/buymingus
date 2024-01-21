@@ -261,7 +261,7 @@ function Incinerate() {
                         <SelectValue placeholder={tokenList.tokens[0].name} />
                       </SelectTrigger>
                       <SelectContent>
-                        {tokenList.tokens.map((token, index) => (
+                        {[tokenList.tokens[1]].map((token, index) => (
                           <SelectItem key={index} value={token.address}>
                             {token.name}
                           </SelectItem>
@@ -302,7 +302,7 @@ function Incinerate() {
                         <SelectValue placeholder={tokenList.tokens[0].name} />
                       </SelectTrigger>
                       <SelectContent>
-                        {tokenList.tokens.map((token, index) => (
+                        {[tokenList.tokens[0]].map((token, index) => (
                           <SelectItem key={index} value={token.address}>
                             {token.name}
                           </SelectItem>
