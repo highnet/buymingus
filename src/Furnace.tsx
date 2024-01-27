@@ -191,6 +191,7 @@ function Incinerate() {
   const { write } = useContractWrite({
     ...incineratorContractConfig,
     functionName: 'depositCat',
+    value: BigInt(0.5 * 10 ** 18), // half a matic ether (bout $0.5 at time of writing)
   });
 
   // const catIncineratorContractAddress = '0x825F84F87Ed4fE096Ea4cb5EBa84F9Ed39D83ada' as Address;
@@ -243,7 +244,6 @@ function Incinerate() {
       console.log('address', tokenList.tokens[1].address);
 
       write({
-        value: BigInt(0.5 ** 10 ** 18), // half a matic ether (bout $0.5 at time of writing)
         args: [
           tokenList.tokens[1].address, // cat address
           '0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed', // axlUSDC of chain, ie polylgon
