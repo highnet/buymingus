@@ -183,7 +183,7 @@ const formSchema = z.object({
 
 function Incinerate() {
   const incineratorContractConfig = {
-    address: '0x825F84F87Ed4fE096Ea4cb5EBa84F9Ed39D83ada',
+    address: '0xA6f808109B44778732e0814aC401CD9eE45E4a19',
     abi: incineratorABI.abi,
     startBlock: import.meta.env.PROD ? 156835731 : 155879476,
   } as const;
