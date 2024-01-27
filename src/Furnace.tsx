@@ -5,7 +5,7 @@ import Button from "./Button";
 import Icon from "trmd3components/Icon";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { useAccount } from "wagmi";
+import { useAccount, useContractWrite } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { TokenList } from "@uniswap/token-lists";
 import { Separator } from "@/components/ui/separator";
@@ -25,6 +25,7 @@ import {
   FormControl,
   FormMessage,
 } from "./components/ui/form";
+import * as incineratorABI from './abis/Incinerator.json';
 
 enum ContextState {
   Incinerate = "incinerate",
@@ -181,6 +182,17 @@ const formSchema = z.object({
 });
 
 function Incinerate() {
+  const incineratorContractConfig = {
+    address: '0x960833d7804A7aDE9D360501aebD94008b8C4838',
+    abi: incineratorABI.abi,
+    startBlock: import.meta.env.PROD ? 156835731 : 155879476,
+  } as const;
+
+  const { write } = useContractWrite({
+    ...incineratorContractConfig,
+    functionName: 'depositCat',
+  });
+
   // const catIncineratorContractAddress = '0x825F84F87Ed4fE096Ea4cb5EBa84F9Ed39D83ada' as Address;
   // const account = useAccount();
 
@@ -206,27 +218,41 @@ function Incinerate() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-
     console.log(values);
 
     const params = {
       // Not all token symbols are supported. The address of the token should be used instead.
       sellToken: values.inputToken, // OmniCat ON POLYGON
       buyToken: "0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed", // axlUSDC ON POLYGON
-      sellAmount: "10000000000000000",
+      sellAmount: BigInt(values.inputAmount) * BigInt(10) ** BigInt(18),
     };
 
     const headers = { "0x-api-key": import.meta.env.VITE_ZEROX_API_KEY };
 
     try {
-      const response = await fetch(
-        `https://polygon.api.0x.org/swap/v1/price?${new URLSearchParams(params).toString()}`,
+      const fetchResponse = await fetch(
+        `https://polygon.api.0x.org/swap/v1/quote?${new URLSearchParams(params).toString()}`,
         { headers },
       );
-      const data = await response.json();
-      console.log(data);
+      const response = await fetchResponse.json();
+      console.log(response);
+
+      const swapData = response.data;
+      console.log('swapData', swapData);
+
+      console.log('address', tokenList.tokens[1].address);
+
+      write({
+        value: BigInt(0.5 ** 10 ** 18), // half a matic ether (bout $0.5 at time of writing)
+        args: [
+          tokenList.tokens[1].address, // cat address
+          '0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed', // axlUSDC of chain, ie polylgon
+          'axlUSDC', // ie polygon
+          10000 * 10 ** 18, // 10,000 Omnicat
+          '0x960833d7804a7ade9d360501aebd94008b8c4838', // bridgeDestination
+          swapData,
+        ]
+      });
     } catch (error) {
       console.error("Error:", error);
     }
