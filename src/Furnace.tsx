@@ -3,7 +3,7 @@ import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import { Link } from "@tanstack/react-router";
 import Button from "./Button";
 import Icon from "trmd3components/Icon";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Address, erc20ABI, useAccount, useContractRead, useContractWrite, useWalletClient } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -146,11 +146,6 @@ const styles = stylex.create({
     height: "3rem",
     border: ".3rem solid #1C81CF",
   },
-  incinerateButton: {
-    display: "flex",
-    justifyContent: "center",
-    padding: "2.4rem 0 0 0",
-  },
   inputField: {
     border: "none",
     width: "100%",
@@ -158,10 +153,14 @@ const styles = stylex.create({
     height: "6.4rem",
     lineHeight: "6.4rem",
     backgroundColor: "transparent",
+    opacity: "1",
     color: "white",
     "::placeholder": {
       color: "rgba(255, 255, 255, 0.5)",
-    }
+    },
+  },
+  inputFieldDisabled: {
+    pointerEvents: "none",
   },
   select: {
     border: "none",
@@ -176,6 +175,7 @@ const styles = stylex.create({
   form: {
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
     backgroundColor: "rgba(1, 1, 1, 0.02)",
     borderRadius: "1.6rem",
     padding: ".8rem",
@@ -203,6 +203,19 @@ const styles = stylex.create({
     height: "3.2rem",
     borderRadius: "50%",
     background: "linear-gradient(to right, #FF9900, violet)",
+  },
+  submitButton: {
+    transition: "all 0.25s ease-in",
+    height: "0rem",
+    padding: "0",
+    opacity: "0",
+    overflow: "hidden",
+  },
+  submitButtonVisible: {
+    height: "7.2rem",
+    padding: "2.4rem 0 2.4rem 0",
+    opacity: "1",
+    overflow: "visible",
   },
 });
 
@@ -266,6 +279,13 @@ const formSchema = z.object({
 });
 
 function Incinerate() {
+  const [subForm0IsFocused, setSubForm0IsFocused] = useState(false);
+  const subForm0Ref = useRef<HTMLDivElement>(null);
+  const [subForm1IsFocused, setSubForm1IsFocused] = useState(false); // LMAO CAN U MAKE THIS A SCALABLE SYSTEM?
+  const subForm1Ref = useRef<HTMLDivElement>(null);
+  const [buttonText, setButtonText] = useState("Incinerate");
+  const [canSubmit, setCanSubmit] = useState(false);
+
   const { address: account } = useAccount();
   const walletClient = useWalletClient().data!;
   // generate your token list however you like.
@@ -316,7 +336,7 @@ function Incinerate() {
     defaultValues: {
       inputAmount: "",
       inputToken: tokenList.tokens[1].address, // omnicat
-      outputAmount: "",
+      outputAmount: "1337",
       outputToken: tokenList.tokens[0].address, // mingus
     },
   });
@@ -374,16 +394,36 @@ function Incinerate() {
     }
   }
 
-  const [subFormIsFocused, setSubFormIsFocused] = useState(false);
-  const subFormRef = useRef<HTMLDivElement>(null);
+  const handleFormchange = (e: ChangeEvent) => {
+    console.log(form.getValues());
+    if (e.nativeEvent.currentTarget) {
+      const inputAmount = (e.nativeEvent.target as HTMLInputElement).value;
+      if (inputAmount === "") {
+        setCanSubmit(false);
+        return;
+      }
+    }
 
-  console.log(subFormIsFocused);
+    setCanSubmit(true);
+  }
+
+  useEffect(() => {
+    const [integerPart, fractionalPart] = form.getValues().inputAmount.split('.');
+    const integerPartBigInt = BigInt(integerPart) * BigInt(10) ** BigInt(18);
+    const fractionalPartBigInt = fractionalPart ? BigInt(fractionalPart) * BigInt(10) ** BigInt(18 - fractionalPart.length) : BigInt(0);
+    const inputAmountBigInt = integerPartBigInt + fractionalPartBigInt;
+    if (inputAmountBigInt > BigInt(incinerationAllowance.data ?? 0)) {
+      setButtonText("Approve");
+    } else {
+      setButtonText("Incinerate");
+    }
+  }, [form.getValues().inputAmount, incinerationAllowance.data]);
 
   return (
     <div {...stylex.props(styles.incinerate)}>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} {...stylex.props(styles.form)}>
-          <div ref={subFormRef} {...stylex.props(styles.subForm, subFormIsFocused ? styles.subFormFocused : null)} tabIndex={0}>
+          <div ref={subForm0Ref} {...stylex.props(styles.subForm, subForm0IsFocused ? styles.subFormFocused : null)} tabIndex={0}>
             <div {...stylex.props(styles.inputLabel)}>
               Amount to Incinerate
             </div>
@@ -395,17 +435,22 @@ function Incinerate() {
                   <FormItem>
                     <FormControl>
                       <Input
+                        type="number"
                         placeholder="0"
                         {...field}
                         {...stylex.props(styles.inputField)}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          handleFormchange(e);
+                        }}
                         onFocus={(e) => {
                           e.stopPropagation();
-                          if (subFormRef.current) {
-                            setSubFormIsFocused(true);
+                          if (subForm0Ref.current) {
+                            setSubForm0IsFocused(true);
                           }
                         }}
                         onBlur={() => {
-                          setSubFormIsFocused(false);
+                          setSubForm0IsFocused(false);
                         }}
                       />
                     </FormControl>
@@ -443,7 +488,7 @@ function Incinerate() {
           <div {...stylex.props(styles.swapIcon)}>
             <Icon>swap_vertical_circle</Icon>
           </div>
-          <div {...stylex.props(styles.subForm)} tabIndex={0}>
+          <div ref={subForm1Ref} {...stylex.props(styles.subForm, subForm1IsFocused ? styles.subFormFocused : null)} tabIndex={0}>
             <div {...stylex.props(styles.inputLabel)}>
               You Get
             </div>
@@ -454,7 +499,20 @@ function Incinerate() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input {...field} {...stylex.props(styles.inputField)} />
+                      <Input
+                        disabled
+                        {...field}
+                        {...stylex.props(styles.inputField)}
+                        onFocus={(e) => {
+                          e.stopPropagation();
+                          if (subForm1Ref.current) {
+                            setSubForm1IsFocused(true);
+                          }
+                        }}
+                        onBlur={() => {
+                          setSubForm1IsFocused(false);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -486,8 +544,8 @@ function Incinerate() {
               />
             </div>
           </div>
-          <div {...stylex.props(styles.incinerateButton)}>
-            <Button type="submit">Incinerate</Button>
+          <div {...stylex.props(styles.submitButton, canSubmit ? styles.submitButtonVisible : null)}>
+            <Button type="submit">{buttonText}</Button>
           </div>
         </form>
       </FormProvider>
@@ -584,9 +642,7 @@ export default function Furnace({ style }: Props) {
         </div>
         <Separator />
       </div>
-
       <div>{contextDisplay}</div>
     </div >
-
   );
 }
