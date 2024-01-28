@@ -17,7 +17,7 @@ const styles = stylex.create({
     padding: "0.8rem 1.6rem",
     cursor: "pointer",
     transition: "all 0.2s ease-in-out",
-    fontSize: "2.2rem",
+    fontSize: "2.8rem",
     width: 'fit-content',
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
     ":hover": {

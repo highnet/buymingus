@@ -8,13 +8,13 @@ const styles = stylex.create({
   default: {
     height: "100vh",
     width: "100vw",
+
     display: "flex",
     justifyContent: "center",
     "@media (min-width: 601px)": {
       paddingTop: "0",
       borderRadius: "1.6rem",
     },
-    overflow: "hidden",
     marginTop: "1.6rem"
   },
   container: {

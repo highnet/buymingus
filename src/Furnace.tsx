@@ -48,7 +48,7 @@ const styles = stylex.create({
   default: {
     display: "flex",
     flexDirection: "column",
-    width: "100vw",
+    width: "90vw",
     background:
       "linear-gradient(251deg, rgba(56,121,171,1) 0%, rgba(0,145,255,1) 100%)",
     paddingTop: "3rem",
@@ -58,7 +58,7 @@ const styles = stylex.create({
     backgroundClip: "padding-box",
     boxShadow: "3px 3px 20px 10px violet, -3px -3px 20px 10px #FF9900",
     "@media (min-width: 601px)": {
-      width: "50vw",
+      width: "601px",
       paddingTop: "0",
       borderRadius: "1.6rem",
     },
