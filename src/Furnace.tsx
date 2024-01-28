@@ -3,7 +3,7 @@ import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import { Link } from "@tanstack/react-router";
 import Button from "./Button";
 import Icon from "trmd3components/Icon";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Address, erc20ABI, useAccount, useContractRead, useContractWrite, useWalletClient } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -50,6 +50,7 @@ const styles = stylex.create({
     display: "flex",
     flexDirection: "column",
     width: "90vw",
+    height: "auto",
     background:
       "linear-gradient(251deg, rgba(56,121,171,1) 0%, rgba(0,145,255,1) 100%)",
     paddingTop: "3rem",
@@ -125,17 +126,83 @@ const styles = stylex.create({
   inputWithPill: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     gap: "0.8rem",
   },
   swapIcon: {
-    transform: "scale(1.8)",
+    position: "relative",
+    margin: "-1.5rem auto",
+    display: "flex",
+    alignSelf: "center",
+    justifyContent: "center",
+    transform: "scale(1.3)",
     pointerEvents: "none",
-    padding: "2rem 0 1rem 0",
+    backgroundColor: "#0090FE",
+    borderRadius: "25%",
+    overflow: "visible",
+    boxSize: "content-box",
+    width: "3rem",
+    height: "3rem",
+    border: ".3rem solid #1C81CF",
   },
   incinerateButton: {
     display: "flex",
     justifyContent: "center",
     padding: "2.4rem 0 0 0",
+  },
+  inputField: {
+    border: "none",
+    width: "100%",
+    fontSize: "3.6rem",
+    height: "6.4rem",
+    lineHeight: "6.4rem",
+    backgroundColor: "transparent",
+    color: "white",
+    "::placeholder": {
+      color: "rgba(255, 255, 255, 0.5)",
+    }
+  },
+  select: {
+    border: "none",
+    width: "14rem",
+    fontSize: "2rem",
+    height: "4.1rem",
+    lineHeight: "4.1rem",
+    backgroundColor: "rgba(1, 1, 1, 0.1)",
+    borderRadius: "1.6rem",
+    display: "flex",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "rgba(1, 1, 1, 0.02)",
+    borderRadius: "1.6rem",
+    padding: ".8rem",
+    gap: ".2rem",
+    boxSizing: "border-box",
+  },
+  subForm: {
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "#0090FE",
+    borderRadius: "1.6rem",
+    padding: "2.5rem",
+    border: "1px solid transparent",
+  },
+  subFormFocused: {
+    backgroundColor: "#0B8AEA",
+    border: "1px solid rgba(1, 1, 1, 0.1)",
+  },
+  inputLabel: {
+    fontSize: "1.9rem",
+    padding: "0 0 0.8rem 0",
+  },
+  tokenLogo: {
+    width: "3.2rem",
+    height: "3.2rem",
+    borderRadius: "50%",
+    background: "linear-gradient(to right, #FF9900, violet)",
   },
 });
 
@@ -307,88 +374,117 @@ function Incinerate() {
     }
   }
 
+  const [subFormIsFocused, setSubFormIsFocused] = useState(false);
+  const subFormRef = useRef<HTMLDivElement>(null);
+
+  console.log(subFormIsFocused);
+
   return (
     <div {...stylex.props(styles.incinerate)}>
       <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          Amount
-          <div {...stylex.props(styles.inputWithPill)}>
-            <FormField
-              control={form.control}
-              name="inputAmount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="inputToken"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} {...field}>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder={tokenList.tokens[0].name} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {[tokenList.tokens[1]].map((token, index) => (
-                          <SelectItem key={index} value={token.address}>
-                            {token.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <form onSubmit={form.handleSubmit(onSubmit)} {...stylex.props(styles.form)}>
+          <div ref={subFormRef} {...stylex.props(styles.subForm, subFormIsFocused ? styles.subFormFocused : null)} tabIndex={0}>
+            <div {...stylex.props(styles.inputLabel)}>
+              Amount to Incinerate
+            </div>
+            <div {...stylex.props(styles.inputWithPill)}>
+              <FormField
+                control={form.control}
+                name="inputAmount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        placeholder="0"
+                        {...field}
+                        {...stylex.props(styles.inputField)}
+                        onFocus={(e) => {
+                          e.stopPropagation();
+                          if (subFormRef.current) {
+                            setSubFormIsFocused(true);
+                          }
+                        }}
+                        onBlur={() => {
+                          setSubFormIsFocused(false);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="inputToken"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} {...field}>
+                        <SelectTrigger  {...stylex.props(styles.select)}>
+                          <div {...stylex.props(styles.tokenLogo)} />
+                          <SelectValue placeholder={tokenList.tokens[0].name} />
+                        </SelectTrigger>
+                        <SelectContent>
+
+                          {[tokenList.tokens[1]].map((token, index) => (
+                            <SelectItem key={index} value={token.address}>
+                              {token.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
           <div {...stylex.props(styles.swapIcon)}>
             <Icon>swap_vertical_circle</Icon>
           </div>
-          You Get
-          <div {...stylex.props(styles.inputWithPill)}>
-            <FormField
-              control={form.control}
-              name="outputAmount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="outputToken"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} {...field}>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder={tokenList.tokens[0].name} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {[tokenList.tokens[0]].map((token, index) => (
-                          <SelectItem key={index} value={token.address}>
-                            {token.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <div {...stylex.props(styles.subForm)} tabIndex={0}>
+            <div {...stylex.props(styles.inputLabel)}>
+              You Get
+            </div>
+            <div {...stylex.props(styles.inputWithPill)}>
+              <FormField
+                control={form.control}
+                name="outputAmount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input {...field} {...stylex.props(styles.inputField)} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="outputToken"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} {...field} >
+                        <SelectTrigger  {...stylex.props(styles.select)}>
+                          <div {...stylex.props(styles.tokenLogo)} />
+                          <SelectValue placeholder={tokenList.tokens[0].name} />
+                        </SelectTrigger>
+                        <SelectContent >
+                          {[tokenList.tokens[0]].map((token, index) => (
+                            <SelectItem key={index} value={token.address} >
+                              {token.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
           <div {...stylex.props(styles.incinerateButton)}>
             <Button type="submit">Incinerate</Button>

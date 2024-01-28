@@ -18,6 +18,7 @@ const styles = stylex.create({
     marginTop: "1.6rem"
   },
   container: {
+
     width: "fit-content",
     display: "flex",
     flexDirection: "column",
