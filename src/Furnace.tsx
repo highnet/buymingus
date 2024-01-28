@@ -442,6 +442,16 @@ function Incinerate() {
     }
   }, [form.getValues().inputAmount, incinerationAllowance.data]);
 
+  function renderSwapIcon() {
+    if (!account) {
+      return <Icon>block</Icon>;
+    } else if (subForm0IsFocused || canSubmit) {
+      return <Icon>swap_vertical_circle</Icon>;
+    } else {
+      return <Icon>local_fire_department</Icon>;
+    }
+  }
+
   return (
     <div {...stylex.props(styles.incinerate)}>
       <FormProvider {...form}>
@@ -509,7 +519,7 @@ function Incinerate() {
             </div>
           </div>
           <div {...stylex.props(styles.swapIcon)}>
-            <Icon>swap_vertical_circle</Icon>
+            {renderSwapIcon()}
           </div>
           <div ref={subForm1Ref} {...stylex.props(subForm1IsFocused ? styles.subFormFocused : null, canSubmit || subForm0IsFocused ? styles.subFormVisible : styles.subFormHidden)} tabIndex={0}>
             <div {...stylex.props(styles.inputLabel)}>
