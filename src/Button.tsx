@@ -19,8 +19,10 @@ const styles = stylex.create({
     transition: "all 0.2s ease-in-out",
     fontSize: "2.2rem",
     width: 'fit-content',
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
     ":hover": {
       backgroundPosition: 'left bottom',
+      boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.3)",
       scale: 1.3
     },
     "@media (min-width: 601px)": {

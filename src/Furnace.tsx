@@ -33,15 +33,30 @@ enum ContextState {
 }
 
 const styles = stylex.create({
+  defaultBefore: {
+    content: '""',
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: -1,
+    margin: "-0.35rem",
+    borderRadius: "inherit",
+    background: "linear-gradient(to right, #FF9900, violet)",
+  },
   default: {
     display: "flex",
     flexDirection: "column",
     width: "100vw",
-    border: ".1rem solid black",
     background:
       "linear-gradient(251deg, rgba(56,121,171,1) 0%, rgba(0,145,255,1) 100%)",
     paddingTop: "3rem",
     color: "white",
+    position: "relative",
+    border: ".5rem solid transparent",
+    backgroundClip: "padding-box",
+    boxShadow: "3px 3px 20px 10px violet, -3px -3px 20px 10px #FF9900",
     "@media (min-width: 601px)": {
       width: "50vw",
       paddingTop: "0",
@@ -62,6 +77,7 @@ const styles = stylex.create({
     display: "flex",
     padding: "0 1.6rem 0 1.6rem",
     gap: "1.6rem",
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
   },
   contextMenuWrapper: {
     paddingRight: "1rem",
@@ -225,7 +241,7 @@ function Incinerate() {
       // Not all token symbols are supported. The address of the token should be used instead.
       sellToken: values.inputToken, // OmniCat ON POLYGON
       buyToken: "0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed", // axlUSDC ON POLYGON
-      sellAmount: BigInt(values.inputAmount) * BigInt(10) ** BigInt(18),
+      sellAmount: (BigInt(values.inputAmount) * BigInt(10) ** BigInt(18)).toString(),
     };
 
     const headers = { "0x-api-key": import.meta.env.VITE_ZEROX_API_KEY };
@@ -398,7 +414,8 @@ export default function Furnace({ style }: Props) {
   }
 
   return (
-    <div {...stylex.props(styles.default, style)}>
+    <div {...stylex.props(styles.default)}>
+      <div {...stylex.props(styles.defaultBefore)} />
       <div {...stylex.props(styles.header)}>
         <Link {...stylex.props(styles.link)} to="/">
           <Button>
@@ -420,7 +437,7 @@ export default function Furnace({ style }: Props) {
             {...stylex.props(
               styles.contextSwitcher,
               contextState !== ContextState.Incinerate &&
-                styles.inactiveContext,
+              styles.inactiveContext,
             )}
             onClick={() => setContextState(ContextState.Incinerate)}
           >
@@ -440,6 +457,7 @@ export default function Furnace({ style }: Props) {
       </div>
 
       <div>{contextDisplay}</div>
-    </div>
+    </div >
+
   );
 }
