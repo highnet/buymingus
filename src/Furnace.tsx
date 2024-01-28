@@ -5,7 +5,7 @@ import Button from "./Button";
 import Icon from "trmd3components/Icon";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { useAccount, useContractWrite } from "wagmi";
+import { Address, erc20ABI, useAccount, useContractRead, useContractWrite, useWalletClient } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { TokenList } from "@uniswap/token-lists";
 import { Separator } from "@/components/ui/separator";
@@ -26,6 +26,7 @@ import {
   FormMessage,
 } from "./components/ui/form";
 import * as incineratorABI from './abis/Incinerator.json';
+import { getContract } from 'viem'
 
 enum ContextState {
   Incinerate = "incinerate",
@@ -198,25 +199,44 @@ const formSchema = z.object({
 });
 
 function Incinerate() {
+  const { address: account } = useAccount();
+  const walletClient = useWalletClient().data!;
+  // generate your token list however you like.
+  const tokenList: TokenList = generateMyTokenList();
+
   const incineratorContractConfig = {
     address: '0xA6f808109B44778732e0814aC401CD9eE45E4a19',
     abi: incineratorABI.abi,
     startBlock: import.meta.env.PROD ? 156835731 : 155879476,
   } as const;
 
-  const { write } = useContractWrite({
+  const incinerationUnderlying = getContract({
+    address: tokenList.tokens[1].address as Address,
+    abi: erc20ABI,
+    walletClient
+  });
+
+  if (!incineratorContractConfig || !incinerationUnderlying) return;
+
+  const { write: depositCat } = useContractWrite({
     ...incineratorContractConfig,
     functionName: 'depositCat',
     value: BigInt(0.5 * 10 ** 18), // half a matic ether (bout $0.5 at time of writing)
   });
 
-  // const catIncineratorContractAddress = '0x825F84F87Ed4fE096Ea4cb5EBa84F9Ed39D83ada' as Address;
-  // const account = useAccount();
+  const incinerationAllowance = useContractRead({
+    ...incinerationUnderlying,
+    functionName: 'allowance',
+    args: [
+      account as Address, // owner
+      incineratorContractConfig.address // spender
+    ],
+  });
 
-  // console.log(catIncineratorContractAddress, account.status);
-
-  // generate your token list however you like.
-  const tokenList: TokenList = generateMyTokenList();
+  const { write: approvateIncineration } = useContractWrite({
+    ...incinerationUnderlying,
+    functionName: 'approve',
+  });
 
   // use a tool like `ajv` to validate your generated token list
   // validateMyTokenList(myList, schema);
@@ -236,6 +256,19 @@ function Incinerate() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+
+    try {
+      if (BigInt(incinerationAllowance.data ?? 0) < BigInt(values.inputAmount)) {
+        approvateIncineration({
+          args: [
+            incinerationUnderlying.address, // spender
+            BigInt(values.inputAmount) * BigInt(10) ** BigInt(18), // amount
+          ]
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
 
     const params = {
       // Not all token symbols are supported. The address of the token should be used instead.
@@ -259,7 +292,7 @@ function Incinerate() {
 
       console.log('address', tokenList.tokens[1].address);
 
-      write({
+      depositCat({
         args: [
           tokenList.tokens[1].address, // cat address
           '0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed', // axlUSDC of chain, ie polylgon
@@ -414,7 +447,7 @@ export default function Furnace({ style }: Props) {
   }
 
   return (
-    <div {...stylex.props(styles.default)}>
+    <div {...stylex.props(styles.default, style)}>
       <div {...stylex.props(styles.defaultBefore)} />
       <div {...stylex.props(styles.header)}>
         <Link {...stylex.props(styles.link)} to="/">
