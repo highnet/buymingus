@@ -194,6 +194,29 @@ const styles = stylex.create({
     backgroundColor: "#0B8AEA",
     border: "1px solid rgba(1, 1, 1, 0.1)",
   },
+  subFormHidden: {
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "#0090FE",
+    borderRadius: "1.6rem",
+    padding: "0rem",
+    border: "1px solid transparent",
+    height: "0rem",
+    overflow: "hidden",
+    transition: "all .6s ease-out",
+    opacity: "0",
+  },
+  subFormVisible: {
+    height: "16rem",
+    padding: "2.5rem",
+    opacity: "1",
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "#0090FE",
+    borderRadius: "1.6rem",
+    border: "1px solid transparent",
+    transition: "all .6s ease-out", // Add this line
+  },
   inputLabel: {
     fontSize: "1.9rem",
     padding: "0 0 0.8rem 0",
@@ -488,7 +511,7 @@ function Incinerate() {
           <div {...stylex.props(styles.swapIcon)}>
             <Icon>swap_vertical_circle</Icon>
           </div>
-          <div ref={subForm1Ref} {...stylex.props(styles.subForm, subForm1IsFocused ? styles.subFormFocused : null)} tabIndex={0}>
+          <div ref={subForm1Ref} {...stylex.props(subForm1IsFocused ? styles.subFormFocused : null, canSubmit || subForm0IsFocused ? styles.subFormVisible : styles.subFormHidden)} tabIndex={0}>
             <div {...stylex.props(styles.inputLabel)}>
               You Get
             </div>
@@ -500,7 +523,6 @@ function Incinerate() {
                   <FormItem>
                     <FormControl>
                       <Input
-                        disabled
                         {...field}
                         {...stylex.props(styles.inputField)}
                         onFocus={(e) => {
@@ -511,6 +533,9 @@ function Incinerate() {
                         }}
                         onBlur={() => {
                           setSubForm1IsFocused(false);
+                        }}
+                        onChange={(e) => {
+                          e.preventDefault();
                         }}
                       />
                     </FormControl>
@@ -549,7 +574,7 @@ function Incinerate() {
           </div>
         </form>
       </FormProvider>
-    </div>
+    </div >
   );
 }
 
@@ -601,7 +626,7 @@ export default function Furnace({ style }: Props) {
   }
 
   return (
-    <div {...stylex.props(styles.default, style)}>
+    <div  {...stylex.props(styles.default, style)}>
       <div {...stylex.props(styles.defaultBefore)} />
       <div {...stylex.props(styles.header)}>
         <Link {...stylex.props(styles.link)} to="/">
