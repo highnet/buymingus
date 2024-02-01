@@ -12,7 +12,6 @@ import Card from "./Card";
 import FlavorText from "./FlavorText";
 
 const styles = stylex.create({
-
   defaultHero: {
     display: "flex",
     flexDirection: "column",
@@ -24,7 +23,6 @@ const styles = stylex.create({
       flexDirection: "row",
       paddingTop: "8rem",
       gap: "6rem",
-
     },
   },
   defaultHeroTitle: {
@@ -103,7 +101,7 @@ export default function Hero({ style }: Props) {
       <div {...stylex.props(styles.defaultHero, style)}>
         <div {...stylex.props(styles.defaultHeroTitle, style)}>$mingus</div>
       </div>
-      <div >
+      <div>
         <FlavorText />
       </div>
       <div {...stylex.props(styles.defaultHero, style)}>

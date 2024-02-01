@@ -5,7 +5,14 @@ import Button from "./Button";
 import Icon from "trmd3components/Icon";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Address, erc20ABI, useAccount, useContractRead, useContractWrite, useWalletClient } from "wagmi";
+import {
+  Address,
+  erc20ABI,
+  useAccount,
+  useContractRead,
+  useContractWrite,
+  useWalletClient,
+} from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { TokenList } from "@uniswap/token-lists";
 import { Separator } from "@/components/ui/separator";
@@ -25,8 +32,8 @@ import {
   FormControl,
   FormMessage,
 } from "./components/ui/form";
-import * as incineratorABI from './abis/Incinerator.json';
-import { getContract } from 'viem'
+import * as incineratorABI from "./abis/Incinerator.json";
+import { getContract } from "viem";
 
 enum ContextState {
   Incinerate = "incinerate",
@@ -315,7 +322,7 @@ function Incinerate() {
   const tokenList: TokenList = generateMyTokenList();
 
   const incineratorContractConfig = {
-    address: '0xA6f808109B44778732e0814aC401CD9eE45E4a19',
+    address: "0xA6f808109B44778732e0814aC401CD9eE45E4a19",
     abi: incineratorABI.abi,
     startBlock: import.meta.env.PROD ? 156835731 : 155879476,
   } as const;
@@ -323,29 +330,29 @@ function Incinerate() {
   const incinerationUnderlying = getContract({
     address: tokenList.tokens[1].address as Address,
     abi: erc20ABI,
-    walletClient
+    walletClient,
   });
 
   if (!incineratorContractConfig || !incinerationUnderlying) return;
 
   const { write: depositCat } = useContractWrite({
     ...incineratorContractConfig,
-    functionName: 'depositCat',
+    functionName: "depositCat",
     value: BigInt(0.5 * 10 ** 18), // half a matic ether (bout $0.5 at time of writing)
   });
 
   const incinerationAllowance = useContractRead({
     ...incinerationUnderlying,
-    functionName: 'allowance',
+    functionName: "allowance",
     args: [
       account as Address, // owner
-      incineratorContractConfig.address // spender
+      incineratorContractConfig.address, // spender
     ],
   });
 
   const { write: approvateIncineration } = useContractWrite({
     ...incinerationUnderlying,
-    functionName: 'approve',
+    functionName: "approve",
   });
 
   // use a tool like `ajv` to validate your generated token list
@@ -368,12 +375,14 @@ function Incinerate() {
     console.log(values);
 
     try {
-      if (BigInt(incinerationAllowance.data ?? 0) < BigInt(values.inputAmount)) {
+      if (
+        BigInt(incinerationAllowance.data ?? 0) < BigInt(values.inputAmount)
+      ) {
         approvateIncineration({
           args: [
             incinerationUnderlying.address, // spender
             BigInt(values.inputAmount) * BigInt(10) ** BigInt(18), // amount
-          ]
+          ],
         });
       }
     } catch (error) {
@@ -384,7 +393,10 @@ function Incinerate() {
       // Not all token symbols are supported. The address of the token should be used instead.
       sellToken: values.inputToken, // OmniCat ON POLYGON
       buyToken: "0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed", // axlUSDC ON POLYGON
-      sellAmount: (BigInt(values.inputAmount) * BigInt(10) ** BigInt(18)).toString(),
+      sellAmount: (
+        BigInt(values.inputAmount) *
+        BigInt(10) ** BigInt(18)
+      ).toString(),
     };
 
     const headers = { "0x-api-key": import.meta.env.VITE_ZEROX_API_KEY };
@@ -398,19 +410,19 @@ function Incinerate() {
       console.log(response);
 
       const swapData = response.data;
-      console.log('swapData', swapData);
+      console.log("swapData", swapData);
 
-      console.log('address', tokenList.tokens[1].address);
+      console.log("address", tokenList.tokens[1].address);
 
       depositCat({
         args: [
           tokenList.tokens[1].address, // cat address
-          '0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed', // axlUSDC of chain, ie polylgon
-          'axlUSDC', // ie polygon
+          "0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed", // axlUSDC of chain, ie polylgon
+          "axlUSDC", // ie polygon
           10000 * 10 ** 18, // 10,000 Omnicat
-          '0x960833d7804a7ade9d360501aebd94008b8c4838', // bridgeDestination
+          "0x960833d7804a7ade9d360501aebd94008b8c4838", // bridgeDestination
           swapData,
-        ]
+        ],
       });
     } catch (error) {
       console.error("Error:", error);
@@ -428,12 +440,17 @@ function Incinerate() {
     }
 
     setCanSubmit(true);
-  }
+  };
 
   useEffect(() => {
-    const [integerPart, fractionalPart] = form.getValues().inputAmount.split('.');
+    const [integerPart, fractionalPart] = form
+      .getValues()
+      .inputAmount.split(".");
     const integerPartBigInt = BigInt(integerPart) * BigInt(10) ** BigInt(18);
-    const fractionalPartBigInt = fractionalPart ? BigInt(fractionalPart) * BigInt(10) ** BigInt(18 - fractionalPart.length) : BigInt(0);
+    const fractionalPartBigInt = fractionalPart
+      ? BigInt(fractionalPart) *
+        BigInt(10) ** BigInt(18 - fractionalPart.length)
+      : BigInt(0);
     const inputAmountBigInt = integerPartBigInt + fractionalPartBigInt;
     if (inputAmountBigInt > BigInt(incinerationAllowance.data ?? 0)) {
       setButtonText("Approve");
@@ -455,11 +472,19 @@ function Incinerate() {
   return (
     <div {...stylex.props(styles.incinerate)}>
       <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} {...stylex.props(styles.form)}>
-          <div ref={subForm0Ref} {...stylex.props(styles.subForm, subForm0IsFocused ? styles.subFormFocused : null)} tabIndex={0}>
-            <div {...stylex.props(styles.inputLabel)}>
-              Amount to Incinerate
-            </div>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          {...stylex.props(styles.form)}
+        >
+          <div
+            ref={subForm0Ref}
+            {...stylex.props(
+              styles.subForm,
+              subForm0IsFocused ? styles.subFormFocused : null,
+            )}
+            tabIndex={0}
+          >
+            <div {...stylex.props(styles.inputLabel)}>Amount to Incinerate</div>
             <div {...stylex.props(styles.inputWithPill)}>
               <FormField
                 control={form.control}
@@ -498,12 +523,11 @@ function Incinerate() {
                   <FormItem>
                     <FormControl>
                       <Select onValueChange={field.onChange} {...field}>
-                        <SelectTrigger  {...stylex.props(styles.select)}>
+                        <SelectTrigger {...stylex.props(styles.select)}>
                           <div {...stylex.props(styles.tokenLogo)} />
                           <SelectValue placeholder={tokenList.tokens[0].name} />
                         </SelectTrigger>
                         <SelectContent>
-
                           {[tokenList.tokens[1]].map((token, index) => (
                             <SelectItem key={index} value={token.address}>
                               {token.name}
@@ -518,13 +542,18 @@ function Incinerate() {
               />
             </div>
           </div>
-          <div {...stylex.props(styles.swapIcon)}>
-            {renderSwapIcon()}
-          </div>
-          <div ref={subForm1Ref} {...stylex.props(subForm1IsFocused ? styles.subFormFocused : null, canSubmit || subForm0IsFocused ? styles.subFormVisible : styles.subFormHidden)} tabIndex={0}>
-            <div {...stylex.props(styles.inputLabel)}>
-              You Get
-            </div>
+          <div {...stylex.props(styles.swapIcon)}>{renderSwapIcon()}</div>
+          <div
+            ref={subForm1Ref}
+            {...stylex.props(
+              subForm1IsFocused ? styles.subFormFocused : null,
+              canSubmit || subForm0IsFocused
+                ? styles.subFormVisible
+                : styles.subFormHidden,
+            )}
+            tabIndex={0}
+          >
+            <div {...stylex.props(styles.inputLabel)}>You Get</div>
             <div {...stylex.props(styles.inputWithPill)}>
               <FormField
                 control={form.control}
@@ -559,14 +588,14 @@ function Incinerate() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Select onValueChange={field.onChange} {...field} >
-                        <SelectTrigger  {...stylex.props(styles.select)}>
+                      <Select onValueChange={field.onChange} {...field}>
+                        <SelectTrigger {...stylex.props(styles.select)}>
                           <div {...stylex.props(styles.tokenLogo)} />
                           <SelectValue placeholder={tokenList.tokens[0].name} />
                         </SelectTrigger>
-                        <SelectContent >
+                        <SelectContent>
                           {[tokenList.tokens[0]].map((token, index) => (
-                            <SelectItem key={index} value={token.address} >
+                            <SelectItem key={index} value={token.address}>
                               {token.name}
                             </SelectItem>
                           ))}
@@ -579,12 +608,17 @@ function Incinerate() {
               />
             </div>
           </div>
-          <div {...stylex.props(styles.submitButton, canSubmit ? styles.submitButtonVisible : null)}>
+          <div
+            {...stylex.props(
+              styles.submitButton,
+              canSubmit ? styles.submitButtonVisible : null,
+            )}
+          >
             <Button type="submit">{buttonText}</Button>
           </div>
         </form>
       </FormProvider>
-    </div >
+    </div>
   );
 }
 
@@ -636,7 +670,7 @@ export default function Furnace({ style }: Props) {
   }
 
   return (
-    <div  {...stylex.props(styles.default, style)}>
+    <div {...stylex.props(styles.default, style)}>
       <div {...stylex.props(styles.defaultBefore)} />
       <div {...stylex.props(styles.header)}>
         <Link {...stylex.props(styles.link)} to="/">
@@ -659,7 +693,7 @@ export default function Furnace({ style }: Props) {
             {...stylex.props(
               styles.contextSwitcher,
               contextState !== ContextState.Incinerate &&
-              styles.inactiveContext,
+                styles.inactiveContext,
             )}
             onClick={() => setContextState(ContextState.Incinerate)}
           >
@@ -678,6 +712,6 @@ export default function Furnace({ style }: Props) {
         <Separator />
       </div>
       <div>{contextDisplay}</div>
-    </div >
+    </div>
   );
 }

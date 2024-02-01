@@ -25,7 +25,7 @@ const styles = stylex.create({
   link: {
     textDecoration: "none",
     color: "inherit",
-  }
+  },
 });
 
 type Props = {
@@ -33,15 +33,17 @@ type Props = {
 };
 
 export default function FlavorText({ style }: Props) {
+  return (
+    <div {...stylex.props(styles.default, style)}>
+      <p>Reclaiming the liquidity from cat tokens.</p>
 
-  return <div {...stylex.props(styles.default, style)}>
-    <p>Reclaiming the liquidity from cat tokens.</p>
-
-    {import.meta.env.VITE_ENV !== "production" &&
-      (
+      {import.meta.env.VITE_ENV !== "production" && (
         <Button large>
-          <Link {...stylex.props(styles.link)} to="/incinerate" >INCINERATE CATS</Link>
+          <Link {...stylex.props(styles.link)} to="/incinerate">
+            INCINERATE CATS
+          </Link>
         </Button>
       )}
-  </div>;
+    </div>
+  );
 }
