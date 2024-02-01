@@ -11,17 +11,17 @@ const styles = stylex.create({
     border: `0.1rem solid #FF9900`,
     borderRadius: "0.8rem",
     background: `linear-gradient(to right, #FF9900 50%, #0091FF 50%)`,
-    backgroundSize: '200%',
-    backgroundPosition: 'right bottom',
+    backgroundSize: "200%",
+    backgroundPosition: "right bottom",
     color: "white",
     padding: "0.8rem 1.6rem",
     cursor: "pointer",
     transition: "all 0.2s ease-in-out",
     fontSize: "2.2rem",
-    width: 'fit-content',
+    width: "fit-content",
     ":hover": {
-      backgroundPosition: 'left bottom',
-      scale: 1.3
+      backgroundPosition: "left bottom",
+      scale: 1.3,
     },
     "@media (min-width: 601px)": {
       fontSize: "3.2rem",
@@ -36,10 +36,9 @@ const styles = stylex.create({
     },
   },
   hover: {
-    backgroundPosition: 'left bottom',
-    scale: 1.3
-  }
-
+    backgroundPosition: "left bottom",
+    scale: 1.3,
+  },
 });
 
 type Props = {
@@ -51,7 +50,14 @@ type Props = {
   type?: "button" | "submit" | "reset";
 };
 
-export default function Button({ children, style, onClick, large, toggleable, type }: Props) {
+export default function Button({
+  children,
+  style,
+  onClick,
+  large,
+  toggleable,
+  type,
+}: Props) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [isToggled, setIsToggled] = useState(false); // Add a new state for toggling
 
@@ -75,8 +81,14 @@ export default function Button({ children, style, onClick, large, toggleable, ty
     <button
       type={type} // Use the type prop here
       ref={buttonRef}
-      {...stylex.props(styles.defaultButton, large ? styles.largeButton : null, (isToggled ? styles.hover : null), style)}
-      onClick={handleClick}>
+      {...stylex.props(
+        styles.defaultButton,
+        large ? styles.largeButton : null,
+        isToggled ? styles.hover : null,
+        style,
+      )}
+      onClick={handleClick}
+    >
       {children}
     </button>
   );

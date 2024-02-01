@@ -15,7 +15,7 @@ const styles = stylex.create({
     clipPath: "polygon(0 1%,100% 0,100% 100%,0 95%);",
     paddingTop: "4rem",
     paddingBottom: "4rem",
-    color: "white"
+    color: "white",
   },
   title: {
     marginBottom: "2rem",
@@ -25,57 +25,59 @@ const styles = stylex.create({
 
 type Props = {
   style?: StyleXStyles<any>;
-}
+};
 
 export default function Tokenomics({ style }: Props) {
-  return <div {...stylex.props(styles.default, style)}>
-    <u {...stylex.props(styles.title, style)}>Tokenomics</u>
-    <List>
-      <ListItem
-        className="list-item-dark-theme"
-        size="2-line"
-        leadingElement="icon"
-        iconName="paid"
-        title="Total Supply"
-      >
-        100 million tokens
-      </ListItem>
-      <ListItem
-        className="list-item-dark-theme"
-        size="2-line"
-        leadingElement="icon"
-        iconName="local_fire_department"
-        title="Initial Liquidity Pool"
-      >
-        Burned
-      </ListItem>
-      <ListItem
-        className="list-item-dark-theme"
-        size="2-line"
-        leadingElement="icon"
-        iconName="developer_board"
-        title="Initial Supply Burn"
-      >
-        ~11mm MINGUS
-      </ListItem>
-      <ListItem
-        className="list-item-dark-theme"
-        size="2-line"
-        leadingElement="icon"
-        iconName="diversity_3"
-        title="No team distribution"
-      >
-        Not even a little bit
-      </ListItem>
-      <ListItem
-        className="list-item-dark-theme"
-        size="2-line"
-        leadingElement="icon"
-        iconName="block"
-        title="No distributions at all."
-      >
-        No presale, no airdrop
-      </ListItem>
-    </List>
-  </div>;
+  return (
+    <div {...stylex.props(styles.default, style)}>
+      <u {...stylex.props(styles.title, style)}>Tokenomics</u>
+      <List>
+        <ListItem
+          className="list-item-dark-theme"
+          size="2-line"
+          leadingElement="icon"
+          iconName="paid"
+          title="Total Supply"
+        >
+          100 million tokens
+        </ListItem>
+        <ListItem
+          className="list-item-dark-theme"
+          size="2-line"
+          leadingElement="icon"
+          iconName="local_fire_department"
+          title="Initial Liquidity Pool"
+        >
+          Burned
+        </ListItem>
+        <ListItem
+          className="list-item-dark-theme"
+          size="2-line"
+          leadingElement="icon"
+          iconName="developer_board"
+          title="Initial Supply Burn"
+        >
+          ~11mm MINGUS
+        </ListItem>
+        <ListItem
+          className="list-item-dark-theme"
+          size="2-line"
+          leadingElement="icon"
+          iconName="diversity_3"
+          title="No team distribution"
+        >
+          Not even a little bit
+        </ListItem>
+        <ListItem
+          className="list-item-dark-theme"
+          size="2-line"
+          leadingElement="icon"
+          iconName="block"
+          title="No distributions at all."
+        >
+          No presale, no airdrop
+        </ListItem>
+      </List>
+    </div>
+  );
 }

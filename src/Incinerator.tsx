@@ -1,7 +1,7 @@
 import stylex from "@stylexjs/stylex";
 import { StyleXStyles } from "@stylexjs/stylex/lib/StyleXTypes";
 import Furnace from "./Furnace";
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 
 const styles = stylex.create({
@@ -15,7 +15,7 @@ const styles = stylex.create({
       borderRadius: "1.6rem",
     },
     overflow: "hidden",
-    marginTop: "1.6rem"
+    marginTop: "1.6rem",
   },
   container: {
     width: "fit-content",
@@ -26,7 +26,6 @@ const styles = stylex.create({
       alignItems: "flex-end",
     },
   },
-
 });
 
 type Props = {
