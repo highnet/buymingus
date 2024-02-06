@@ -11,6 +11,9 @@ const styles = stylex.create({
   root: {
     border: ".1rem solid white",
   },
+  presents: {
+
+  },
   logo: {
     width: "12rem",
     height: "12rem",

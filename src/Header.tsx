@@ -17,13 +17,29 @@ const styles = stylex.create({
       padding: "3.2rem",
     },
   },
+  headerChild: {
+    display: 'flex',
+    flexDirection: 'column',
+    "@media (min-width: 601px)": {
+      flexDirection: "row",
+    },
+  },
+  headerButton: {
+    marginLeft: "2rem",
+  },
 });
 
 type Props = {
   style?: StyleXStyles<any>;
 };
 
-const openCamelot = () => {
+const openCamelotMingus = () => {
+  const url =
+    "https://app.camelot.exchange/?token2=0xA8F77a162f0d8fC775A2aaE9Ea855f293e5C9772";
+  window.open(url, "_blank")?.focus();
+};
+
+const openCamelotM404 = () => {
   const url =
     "https://app.camelot.exchange/?token2=0xA8F77a162f0d8fC775A2aaE9Ea855f293e5C9772";
   window.open(url, "_blank")?.focus();
@@ -32,7 +48,10 @@ const openCamelot = () => {
 export default function Header({ style }: Props) {
   return (
     <div {...stylex.props(styles.defaultHeader, style)}>
-      <Button onClick={openCamelot}>Buy Now</Button>
+      <div {...stylex.props(styles.headerChild, style)}>
+        <Button onClick={openCamelotM404} style={styles.headerButton}>Buy $M404</Button>
+        <Button onClick={openCamelotMingus} style={styles.headerButton}>Buy $mingus</Button>
+      </div>
     </div>
   );
 }

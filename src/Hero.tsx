@@ -10,6 +10,7 @@ import RoadMap from "./assets/roadmap.png";
 import LazyImage from "./LazyImage";
 import Card from "./Card";
 import FlavorText from "./FlavorText";
+import MingusPresents from "./assets/mingusPresents404.jpg";
 
 const styles = stylex.create({
   defaultHero: {
@@ -66,6 +67,11 @@ const styles = stylex.create({
   button: {
     cursor: "pointer",
   },
+  mingusPresents: {
+    paddingTop: "4rem",
+    maxWidth: "70rem",
+    margin: "0 auto",
+  },
 });
 
 type Props = {
@@ -98,6 +104,7 @@ const openRoadmap = () => {
 export default function Hero({ style }: Props) {
   return (
     <div>
+      <LazyImage src={[MingusPresents]} style={styles.mingusPresents} />
       <div {...stylex.props(styles.defaultHero, style)}>
         <div {...stylex.props(styles.defaultHeroTitle, style)}>$mingus</div>
       </div>
