@@ -35,7 +35,7 @@ type Props = {
 export default function FlavorText({ style }: Props) {
   return (
     <div {...stylex.props(styles.default, style)}>
-      <p>Reclaiming the liquidity from cat tokens.</p>
+      <p>crosschain memecoin sacrifice protocol ($MINGUS) and ERC404 ($M404)</p>
 
       {import.meta.env.VITE_ENV !== "production" && (
         <Button large>
