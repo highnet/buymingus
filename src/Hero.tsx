@@ -104,7 +104,11 @@ const openRoadmap = () => {
 export default function Hero({ style }: Props) {
   return (
     <div>
-      <LazyImage src={[MingusPresents]} style={styles.mingusPresents} />
+      <a href="https://app.camelot.exchange/?token2=0xA8F77a162f0d8fC775A2aaE9Ea855f293e5C9772">
+      <LazyImage src={[MingusPresents]}
+      // @ts-expect-error wip
+      style={styles.mingusPresents} />
+      </a>
       <div {...stylex.props(styles.defaultHero, style)}>
         <div {...stylex.props(styles.defaultHeroTitle, style)}>$mingus</div>
       </div>

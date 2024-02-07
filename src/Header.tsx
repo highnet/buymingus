@@ -49,8 +49,14 @@ export default function Header({ style }: Props) {
   return (
     <div {...stylex.props(styles.defaultHeader, style)}>
       <div {...stylex.props(styles.headerChild, style)}>
-        <Button onClick={openCamelotM404} style={styles.headerButton}>Buy $M404</Button>
-        <Button onClick={openCamelotMingus} style={styles.headerButton}>Buy $mingus</Button>
+        <Button 
+        onClick={openCamelotM404}
+        // @ts-expect-error wip
+        style={styles.headerButton}>Buy $M404</Button>
+        <Button
+        onClick={openCamelotMingus}
+        // @ts-expect-error wip
+        style={styles.headerButton}>Buy $mingus</Button>
       </div>
     </div>
   );
