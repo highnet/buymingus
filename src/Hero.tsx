@@ -116,7 +116,7 @@ export default function Hero({ style }: Props) {
       style={styles.mingusPresents} />
       </a>
       <div {...stylex.props(styles.defaultHero, style)}>
-        <div {...stylex.props(styles.defaultHeroTitle, style)}>$mingus</div>
+        <div {...stylex.props(styles.defaultHeroTitle, style)}>Mingus Dynasty</div>
       </div>
       <div>
         <FlavorText />
