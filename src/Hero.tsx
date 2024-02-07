@@ -84,6 +84,12 @@ const openDexScreener = () => {
   window.open(url, "_blank")?.focus();
 };
 
+const openDexScreenerM404 = () => {
+  const url =
+    "https://dexscreener.com/arbitrum/0x213a14c4749fD1650E1626Ca4EfF06B4C0E2b25C"
+  window.open(url, "_blank")?.focus();
+};
+
 const openCamelot = () => {
   const url =
     "https://app.camelot.exchange/?token2=0xA8F77a162f0d8fC775A2aaE9Ea855f293e5C9772";
@@ -117,6 +123,14 @@ export default function Hero({ style }: Props) {
       </div>
       <div {...stylex.props(styles.defaultHero, style)}>
         <div {...stylex.props(styles.container)}>
+          <Card onClick={openDexScreenerM404}>
+            M404 / WETH
+            <LazyImage
+              src={[Arbitrum]}
+              style={styles.providerLogo}
+              onClick={openDexScreener}
+            />
+          </Card>
           <Card onClick={openDexScreener}>
             MINGUS / WETH
             <LazyImage
@@ -130,7 +144,7 @@ export default function Hero({ style }: Props) {
             <LazyImage
               src={[Camelot]}
               style={styles.providerLogo}
-              onClick={openCamelot}
+              onClick={() => {}}
             />
           </Button>
           <Button onClick={openRoadmap}>
